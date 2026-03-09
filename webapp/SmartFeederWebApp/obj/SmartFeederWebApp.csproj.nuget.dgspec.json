@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj": {}
+    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj": {}
   },
   "projects": {
-    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj": {
+    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
+        "projectUniqueName": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
         "projectName": "SmartFeederWebApp",
-        "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
+        "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
         "packagesPath": "/home/marco/.nuget/packages/",
-        "outputPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/obj/",
+        "outputPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/marco/.nuget/NuGet/NuGet.Config"

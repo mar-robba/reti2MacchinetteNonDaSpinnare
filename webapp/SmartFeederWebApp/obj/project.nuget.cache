@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+VzjBS32pK0=",
+  "dgSpecHash": "dquRIYzUg8Y=",
   "success": true,
-  "projectFilePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/partireDalloScheletroAI/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
+  "projectFilePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/SmartFeederWebApp/SmartFeederWebApp.csproj",
   "expectedPackageFiles": [
     "/home/marco/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/10.0.0-preview.1.25120.3/microsoft.aspnetcore.authentication.openidconnect.10.0.0-preview.1.25120.3.nupkg.sha512",
     "/home/marco/.nuget/packages/microsoft.identitymodel.abstractions/8.0.1/microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
