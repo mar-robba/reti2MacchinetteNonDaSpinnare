@@ -1,0 +1,49 @@
+@page
+@model SmartFeederWebApp.Pages.Parchi.IndexModel
+@{
+    ViewData["Title"] = "Gestione Parchi";
+}
+
+<h2>Parchi</h2>
+
+@if (User.Identity?.IsAuthenticated == true && User.IsInRole("admin"))
+{
+    <a href="/Parchi/Create" class="btn btn-primary mb-3">+ Nuovo Parco</a>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Indirizzo</th>
+            <th>Città</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Parchi != null)
+        {
+            @foreach (var parco in Model.Parchi)
+            {
+                <tr>
+                    <td>@parco.Id</td>
+                    <td>@parco.Nome</td>
+                    <td>@parco.Indirizzo</td>
+                    <td>@parco.Citta</td>
+                    <td>
+                        <a href="/Distributori?idParco=@parco.Id" class="btn btn-sm btn-info">Distributori</a>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <form method="post" asp-page-handler="Delete" style="display:inline;">
+                                <input type="hidden" name="id" value="@parco.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Eliminare questo parco?')">Elimina</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

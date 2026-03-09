@@ -1,0 +1,15 @@
+com/smartfeeder/server/utils/GsonUtils$2.class
+com/smartfeeder/server/dao/TicketGuastoDao.class
+com/smartfeeder/server/ServerRestApplication.class
+com/smartfeeder/server/model/Distributore.class
+com/smartfeeder/server/model/Parco.class
+com/smartfeeder/server/dao/ParcoDao.class
+com/smartfeeder/server/dao/DistributoreDao.class
+com/smartfeeder/server/utils/GsonUtils$1.class
+com/smartfeeder/server/utils/GsonUtils.class
+com/smartfeeder/server/routes/ParcoRoutes.class
+com/smartfeeder/server/routes/DistributoreRoutes.class
+com/smartfeeder/server/mqtt/MqttMessageHandler.class
+com/smartfeeder/server/model/TicketGuasto.class
+com/smartfeeder/server/routes/TicketRoutes.class
+com/smartfeeder/server/config/DatabaseManager.class

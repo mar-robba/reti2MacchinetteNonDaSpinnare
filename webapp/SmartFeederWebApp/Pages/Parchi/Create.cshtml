@@ -1,0 +1,24 @@
+@page
+@model SmartFeederWebApp.Pages.Parchi.CreateModel
+@{
+    ViewData["Title"] = "Nuovo Parco";
+}
+
+<h2>Registra Nuovo Parco</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" class="form-control" asp-for="Parco.Nome" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Indirizzo</label>
+        <input type="text" class="form-control" asp-for="Parco.Indirizzo" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Città</label>
+        <input type="text" class="form-control" asp-for="Parco.Citta" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Crea Parco</button>
+    <a href="/Parchi" class="btn btn-secondary">Annulla</a>
+</form>

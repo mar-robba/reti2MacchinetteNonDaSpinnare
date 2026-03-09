@@ -1,0 +1,11 @@
+Ecco tutti i riferimenti alle cartelle e all'organizzazione dei file estratti dal documento:
+
+    Cartella backupmysql: Contiene il file .sql di backup necessario per importare il database MySQL della parte amministrativa.
+
+Cartella VisualStudio/AzienaMacchinetteBevande (o .....\Progetto reti 2\progetto-reti 2\VisualStudio\AziendaMacchinetteBevande\): Questa cartella contiene i file per avviare il container tramite docker-compose up e il file soluzione AziendaMacchinetteBevande.sln da aprire con l'IDE di Visual Studio per la parte gestionale Web (sviluppata in ASP.NET).
+
+Cartella Configurazione MQTT e TLS: Contiene i file per la corretta configurazione del broker Mosquitto. Nello specifico, include i certificati per tutte le componenti e una copia dei file mosquitto.conf, mosquitto.pwd, e acl_file.txt.
+
+Cartella Eclipse: Contiene i progetti Maven relativi al ServerREST (chiamato 5676579) e alla macchinetta vera e propria (chiamato macchinettaPISSIR).
+
+Il documento specifica inoltre che le path nel programma si basano sulla cartella "Configurazione MQTT e TLS" e sulla sua posizione relativa rispetto alla cartella "Eclipse". Infine, nei requisiti tecnici viene menzionato esplicitamente che è "necessario windows" proprio per la gestione di questi "path".
