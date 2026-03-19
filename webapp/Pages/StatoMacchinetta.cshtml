@@ -1,0 +1,53 @@
+@page
+@model PissirWebApp.Pages.StatoMacchinettaModel
+@{
+    ViewData["Title"] = "Stato Macchinetta";
+}
+
+<div class="card">
+    <h2>🔍 Stato Macchinetta</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Messaggio))
+    {
+        <div class="alert alert-success">@Model.Messaggio</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Errore))
+    {
+        <div class="alert alert-error">@Model.Errore</div>
+    }
+
+    @if (Model.Macchinetta != null)
+    {
+        <table>
+            <tr><th>ID</th><td>@Model.Macchinetta.Id</td></tr>
+            <tr><th>Nome</th><td>@Model.Macchinetta.Nome</td></tr>
+            <tr><th>Scuola</th><td>@Model.Macchinetta.NomeScuola</td></tr>
+            <tr><th>Stato</th><td><span class="badge @(Model.Macchinetta.Stato == "ATTIVA" ? "badge-ok" : "badge-danger")">@Model.Macchinetta.Stato</span></td></tr>
+            <tr><th>Totale Cassa</th><td>@Model.Macchinetta.CassaTotale.ToString("F2")€</td></tr>
+            <tr><th>Cassa Piena</th><td>@(Model.Macchinetta.FlagCassaPiena ? "⚠️ Sì" : "✅ No")</td></tr>
+            <tr><th>Cialde</th><td>@(Model.Macchinetta.FlagCialdeEsaurimento ? "⚠️ In esaurimento" : "✅ OK")</td></tr>
+            <tr><th>Zucchero</th><td>@(Model.Macchinetta.FlagZuccheroEsaurimento ? "⚠️ In esaurimento" : "✅ OK")</td></tr>
+            <tr><th>Bicchieri</th><td>@(Model.Macchinetta.FlagBicchieriEsaurimento ? "⚠️ In esaurimento" : "✅ OK")</td></tr>
+            <tr><th>Guasto Generico</th><td>@(Model.Macchinetta.FlagGuastoGenerico ? "🔴 Sì" : "✅ No")</td></tr>
+        </table>
+
+        @if (Model.Macchinetta.HasGuasto)
+        {
+            <br />
+            <div class="alert alert-warning">
+                <strong>⚠️ È presente un guasto!</strong> Puoi inviare un tecnico per risolvere il problema.
+            </div>
+            <form method="post">
+                <input type="hidden" name="IdMacchinetta" value="@Model.Macchinetta.Id" />
+                <input type="hidden" name="TipoGuasto" value="@Model.Macchinetta.GuastoDescrizione" />
+                <button type="submit" class="btn btn-warning">🔧 Invia Tecnico</button>
+            </form>
+        }
+    }
+    else
+    {
+        <div class="alert alert-error">Macchinetta non trovata.</div>
+    }
+
+    <br /><a href="javascript:history.back()" class="btn btn-primary">← Indietro</a>
+</div>

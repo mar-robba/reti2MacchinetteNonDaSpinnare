@@ -1,0 +1,47 @@
+@page
+@model PissirWebApp.Pages.ElencoMacchinetteModel
+@{
+    ViewData["Title"] = "Elenco Macchinette";
+}
+
+<div class="card">
+    <h2>📋 Elenco Macchinette @(Model.NomeScuola != null ? $"- {Model.NomeScuola}" : "(tutte)")</h2>
+
+    @if (Model.Macchinette != null && Model.Macchinette.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nome</th><th>Scuola</th><th>Stato</th><th>Flag</th><th>Azione</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model.Macchinette)
+                {
+                    <tr>
+                        <td>@m.Id</td>
+                        <td>@m.Nome</td>
+                        <td>@m.NomeScuola</td>
+                        <td><span class="badge @(m.Stato == "ATTIVA" ? "badge-ok" : "badge-danger")">@m.Stato</span></td>
+                        <td>
+                            @if (m.FlagCassaPiena) { <span class="badge badge-warning">💰 Cassa piena</span> }
+                            @if (m.FlagCialdeEsaurimento) { <span class="badge badge-warning">☕ Cialde</span> }
+                            @if (m.FlagZuccheroEsaurimento) { <span class="badge badge-warning">🧂 Zucchero</span> }
+                            @if (m.FlagBicchieriEsaurimento) { <span class="badge badge-warning">🥤 Bicchieri</span> }
+                            @if (m.FlagGuastoGenerico) { <span class="badge badge-danger">⚠️ Guasto</span> }
+                            @if (!m.FlagCassaPiena && !m.FlagCialdeEsaurimento && !m.FlagZuccheroEsaurimento && !m.FlagBicchieriEsaurimento && !m.FlagGuastoGenerico)
+                            { <span class="badge badge-ok">✅ OK</span> }
+                        </td>
+                        <td>
+                            <a href="/StatoMacchinetta?id=@m.Id" class="btn btn-primary">Dettaglio</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nessuna macchinetta trovata.</div>
+    }
+
+    <br /><a href="javascript:history.back()" class="btn btn-primary">← Indietro</a>
+</div>

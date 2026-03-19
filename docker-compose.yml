@@ -1,77 +1,57 @@
-version: '3.8'
-
 services:
-  # MySQL Database
   mysql:
     image: mysql:8.0
-    container_name: smartfeeder-mysql
+    container_name: pissir-mysql2
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: SmartFeederDB
-      MYSQL_USER: smartfeeder
-      MYSQL_PASSWORD: zLfVSEAz8rKaUi
+      MYSQL_DATABASE: pissir_db
+      MYSQL_USER: pissir_user
+      MYSQL_PASSWORD: pissir_password
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - ./server-rest/src/main/resources/init_mysql.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - smartfeeder-net
+      - pissir-network
 
-  # Eclipse Mosquitto MQTT Broker
   mosquitto:
     image: eclipse-mosquitto:2
-    container_name: smartfeeder-mosquitto
+    container_name: pissir-mosquitto2
     ports:
       - "1883:1883"
+      - "9001:9001"
     volumes:
-      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./mosquitto/config/passwd:/mosquitto/config/passwd
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto_password.txt:/mosquitto/config/password.txt
       - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
     networks:
-      - smartfeeder-net
+      - pissir-network
 
-  # Keycloak Identity Provider
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
-    container_name: smartfeeder-keycloak
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: pissir-keycloak2
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-      KC_HTTP_ENABLED: "true"
-      KC_HTTPS_ENABLED: "false"
-      KC_HOSTNAME_STRICT: "false"
-      KC_PROXY_HEADERS: "xforwarded"
-      KC_HEALTH_ENABLED: "true"
-    command:
-      - start-dev
-      - --import-realm
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak_db
+      KC_DB_USERNAME: pissir_user
+      KC_DB_PASSWORD: pissir_password
+    command: start-dev
     ports:
       - "8080:8080"
-      - "9000:9000"
-    volumes:
-      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
-      - keycloak_data:/opt/keycloak/data
-    healthcheck:
-      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200'" ]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+    depends_on:
+      - mysql
     networks:
-      - smartfeeder-net
+      - pissir-network
 
 volumes:
   mysql_data:
   mosquitto_data:
-  keycloak_data:
-
+  mosquitto_log:
 
 networks:
-  smartfeeder-net:
+  pissir-network:
     driver: bridge

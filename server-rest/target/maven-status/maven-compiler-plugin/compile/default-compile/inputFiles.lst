@@ -1,13 +1,3 @@
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/ServerRestApplication.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/config/DatabaseManager.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/dao/DistributoreDao.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/dao/ParcoDao.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/dao/TicketGuastoDao.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/model/Distributore.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/model/Parco.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/model/TicketGuasto.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/mqtt/MqttMessageHandler.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/routes/DistributoreRoutes.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/routes/ParcoRoutes.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/routes/TicketRoutes.java
-/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/server-rest/src/main/java/com/smartfeeder/server/utils/GsonUtils.java
+/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/server-rest/src/main/java/server/DatabaseManager.java
+/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/server-rest/src/main/java/server/ServerREST.java
+/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/server-rest/src/main/java/server/ServerREST_MQTT.java

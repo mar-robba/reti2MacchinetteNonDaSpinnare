@@ -1,0 +1,28 @@
+@page
+@model PissirWebApp.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="card">
+    <h2>Benvenuto nel Sistema Gestionale PISSIR</h2>
+    <p>Seleziona il tuo ruolo per accedere alle funzionalità:</p>
+</div>
+
+<div class="menu-grid">
+    <a href="/MenuAmministratore" class="menu-item">
+        <div class="icon">👑</div>
+        <h3>Amministratore</h3>
+        <p>Gestisci scuole e macchinette</p>
+    </a>
+    <a href="/MenuImpiegato" class="menu-item">
+        <div class="icon">👤</div>
+        <h3>Impiegato</h3>
+        <p>Visualizza elenchi e stati</p>
+    </a>
+    <a href="/CompletamentoRichiesta" class="menu-item">
+        <div class="icon">🔧</div>
+        <h3>Tecnico</h3>
+        <p>Gestisci richieste di manutenzione</p>
+    </a>
+</div>

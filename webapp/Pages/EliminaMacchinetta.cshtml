@@ -1,0 +1,51 @@
+@page
+@model PissirWebApp.Pages.EliminaMacchinettaModel
+@{
+    ViewData["Title"] = "Elimina Macchinetta";
+}
+
+<div class="card">
+    <h2>☕❌ Elimina Macchinetta</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Messaggio))
+    {
+        <div class="alert alert-success">@Model.Messaggio</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Errore))
+    {
+        <div class="alert alert-error">@Model.Errore</div>
+    }
+
+    @if (Model.Macchinette != null && Model.Macchinette.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nome</th><th>Scuola</th><th>Stato</th><th>Azione</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model.Macchinette)
+                {
+                    <tr>
+                        <td>@m.Id</td>
+                        <td>@m.Nome</td>
+                        <td>@m.NomeScuola</td>
+                        <td><span class="badge @(m.Stato == "ATTIVA" ? "badge-ok" : "badge-danger")">@m.Stato</span></td>
+                        <td>
+                            <form method="post" style="display:inline"
+                                  onsubmit="return confirm('Confermi l\'eliminazione della macchinetta @m.Nome?')">
+                                <input type="hidden" name="IdMacchinetta" value="@m.Id" />
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nessuna macchinetta trovata.</div>
+    }
+
+    <br /><a href="/MenuAmministratore" class="btn btn-primary">← Torna al menu</a>
+</div>

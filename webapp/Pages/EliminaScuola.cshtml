@@ -1,0 +1,52 @@
+@page
+@model PissirWebApp.Pages.EliminaScuolaModel
+@{
+    ViewData["Title"] = "Elimina Scuola";
+}
+
+<div class="card">
+    <h2>🏫❌ Elimina Scuola</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Messaggio))
+    {
+        <div class="alert alert-success">@Model.Messaggio</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Errore))
+    {
+        <div class="alert alert-error">@Model.Errore</div>
+    }
+
+    <p>Seleziona la scuola da eliminare. <strong>Attenzione: verranno eliminate anche tutte le macchinette associate!</strong></p>
+
+    @if (Model.Scuole != null && Model.Scuole.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nome</th><th>Città</th><th>Azione</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var scuola in Model.Scuole)
+                {
+                    <tr>
+                        <td>@scuola.Id</td>
+                        <td>@scuola.Nome</td>
+                        <td>@scuola.Citta</td>
+                        <td>
+                            <form method="post" style="display:inline"
+                                  onsubmit="return confirm('Vuoi davvero eliminare questa scuola e tutte le sue macchinette?')">
+                                <input type="hidden" name="IdScuola" value="@scuola.Id" />
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nessuna scuola trovata.</div>
+    }
+
+    <br /><a href="/MenuAmministratore" class="btn btn-primary">← Torna al menu</a>
+</div>

@@ -1,0 +1,42 @@
+@page
+@{
+    ViewData["Title"] = "Menu Amministratore";
+}
+
+<div class="card">
+    <h2>👑 Menu Amministratore</h2>
+    <p>Gestisci le scuole e le macchinette del sistema.</p>
+</div>
+
+<div class="menu-grid">
+    <a href="/AggiungiScuola" class="menu-item">
+        <div class="icon">🏫➕</div>
+        <h3>Aggiungi Scuola</h3>
+        <p>Registra un nuovo istituto</p>
+    </a>
+    <a href="/AggiungiMacchinetta" class="menu-item">
+        <div class="icon">☕➕</div>
+        <h3>Aggiungi Macchinetta</h3>
+        <p>Aggiungi un distributore a una scuola</p>
+    </a>
+    <a href="/EliminaScuola" class="menu-item">
+        <div class="icon">🏫❌</div>
+        <h3>Elimina Scuola</h3>
+        <p>Rimuovi una scuola e le sue macchinette</p>
+    </a>
+    <a href="/EliminaMacchinetta" class="menu-item">
+        <div class="icon">☕❌</div>
+        <h3>Elimina Macchinetta</h3>
+        <p>Rimuovi una macchinetta dall'elenco</p>
+    </a>
+    <a href="/ElencoMacchinette" class="menu-item">
+        <div class="icon">📋</div>
+        <h3>Elenco Macchinette</h3>
+        <p>Visualizza tutte le macchinette</p>
+    </a>
+    <a href="/ElencoIstituti" class="menu-item">
+        <div class="icon">🏛️</div>
+        <h3>Elenco Istituti</h3>
+        <p>Visualizza tutti gli istituti</p>
+    </a>
+</div>

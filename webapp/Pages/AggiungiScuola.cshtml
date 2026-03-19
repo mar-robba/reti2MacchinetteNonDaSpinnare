@@ -1,0 +1,43 @@
+@page
+@model PissirWebApp.Pages.AggiungiScuolaModel
+@{
+    ViewData["Title"] = "Aggiungi Scuola";
+}
+
+<div class="card">
+    <h2>🏫 Aggiungi Scuola</h2>
+
+    @if (!string.IsNullOrEmpty(Model.Messaggio))
+    {
+        <div class="alert alert-success">@Model.Messaggio</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Errore))
+    {
+        <div class="alert alert-error">@Model.Errore</div>
+    }
+
+    <form method="post">
+        <div class="form-group">
+            <label for="nome">Nome Scuola *</label>
+            <input type="text" id="nome" name="Nome" required value="@Model.Nome" />
+        </div>
+        <div class="form-group">
+            <label for="indirizzo">Indirizzo</label>
+            <input type="text" id="indirizzo" name="Indirizzo" value="@Model.Indirizzo" />
+        </div>
+        <div class="form-group">
+            <label for="citta">Città</label>
+            <input type="text" id="citta" name="Citta" value="@Model.Citta" />
+        </div>
+        <div class="form-group">
+            <label for="provincia">Provincia</label>
+            <input type="text" id="provincia" name="Provincia" value="@Model.Provincia" />
+        </div>
+        <div class="form-group">
+            <label for="cap">CAP</label>
+            <input type="text" id="cap" name="Cap" value="@Model.Cap" />
+        </div>
+        <button type="submit" class="btn btn-primary">Aggiungi Scuola</button>
+        <a href="/MenuAmministratore" class="btn btn-danger" style="margin-left: 10px;">Annulla</a>
+    </form>
+</div>

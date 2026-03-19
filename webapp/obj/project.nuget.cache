@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "dgSpecHash": "wTO48eUEV0s=",
+  "success": true,
+  "projectFilePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+  "expectedPackageFiles": [
+    "/home/marco/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/8.0.0/microsoft.aspnetcore.authentication.openidconnect.8.0.0.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.abstractions/7.0.3/microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.jsonwebtokens/7.0.3/microsoft.identitymodel.jsonwebtokens.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.logging/7.0.3/microsoft.identitymodel.logging.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.protocols/7.0.3/microsoft.identitymodel.protocols.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/7.0.3/microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/microsoft.identitymodel.tokens/7.0.3/microsoft.identitymodel.tokens.7.0.3.nupkg.sha512",
+    "/home/marco/.nuget/packages/system.identitymodel.tokens.jwt/7.0.3/system.identitymodel.tokens.jwt.7.0.3.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Il pacchetto 'Microsoft.IdentityModel.JsonWebTokens' 7.0.3 presenta una vulnerabilità nota di gravità moderata, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
+      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "libraryId": "Microsoft.IdentityModel.JsonWebTokens",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Il pacchetto 'System.IdentityModel.Tokens.Jwt' 7.0.3 presenta una vulnerabilità nota di gravità moderata, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
+      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "libraryId": "System.IdentityModel.Tokens.Jwt",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

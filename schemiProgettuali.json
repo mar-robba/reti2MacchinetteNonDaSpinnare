@@ -1,0 +1,1320 @@
+{
+  "progetto": "Macchinetta (Distributore automatico bevande)",
+  "diagrammi": [
+
+    {
+      "pagina": 1,
+      "tipo": "layout_fisico",
+      "titolo": "Layout fisico interfaccia macchinetta",
+      "componenti": [
+        { "nome": "Schermo", "forma": "rettangolo", "posizione": "sinistra-alto" },
+        { "nome": "ins. monete", "forma": "rettangolo_piccolo", "posizione": "centro-alto" },
+        { "nome": "Ridai resto", "forma": "cerchio", "posizione": "destra-alto" },
+        { "nome": "Tastiera", "forma": "rettangolo_alto", "posizione": "destra-basso" },
+        { "nome": "Output bevanda", "forma": "rettangolo", "posizione": "sinistra-basso" }
+      ]
+    },
+
+    {
+      "pagina": 2,
+      "tipo": "use_case",
+      "titolo": "Diagramma dei casi d'uso – Sistema",
+      "sistema": "System",
+      "attori": ["Impiegato", "Amministratore", "Tecnico", "Utente finale"],
+      "casi_duso": [
+        { "nome": "EffettuaAccesso", "attori": ["Impiegato", "Amministratore"] },
+        {
+          "nome": "elenco istituti",
+          "attori": ["Impiegato"],
+          "extension_points": ["elenco macchinette"]
+        },
+        {
+          "nome": "elenco macchinette",
+          "attori": ["Impiegato"],
+          "extension_points": ["controllo stato macchinetta"]
+        },
+        {
+          "nome": "elenco tutte macchinette",
+          "attori": ["Impiegato", "Amministratore"],
+          "extension_points": ["controllo stato macchinetta"]
+        },
+        {
+          "nome": "controllo stato macchinetta per id",
+          "extension_points": ["invia tecnico se c'è un guasto"],
+          "relazioni": [
+            { "tipo": "extend", "da": "elenco macchinette (EP)", "a": "controllo stato macchinetta per id" },
+            { "tipo": "extend", "da": "elenco tutte macchinette (EP)", "a": "controllo stato macchinetta per id" },
+            { "tipo": "extend", "da": "Completamento_richiesta (EP)", "a": "controllo stato macchinetta per id" }
+          ]
+        },
+        { "nome": "invia tecnico", "relazioni": [{ "tipo": "extend", "da": "invia tecnico se c'è un guasto (EP)", "a": "invia tecnico" }] },
+        {
+          "nome": "Completamento_richiesta",
+          "attori": ["Tecnico"],
+          "extension_points": ["svuota cassa", "ExtensionPoint", "aggiungi zucchero", "riempi cialde", "riempi bicchierini"]
+        },
+        { "nome": "svuota cassa", "attori": ["Tecnico"] },
+        { "nome": "aggiusta macchinetta", "attori": ["Tecnico"] },
+        { "nome": "aggiungi zucchero", "attori": ["Tecnico"] },
+        { "nome": "riempi cialde", "attori": ["Tecnico"] },
+        { "nome": "riempi bicchierini", "attori": ["Tecnico"] },
+        { "nome": "aggiungi scuola", "attori": ["Amministratore"], "relazioni": [{ "tipo": "include", "a": "aggiungi Macchinetta" }] },
+        { "nome": "aggiungi Macchinetta", "attori": ["Amministratore"] },
+        { "nome": "elimina scuola", "attori": ["Amministratore"], "relazioni": [{ "tipo": "include", "a": "elimina tutte macchinette" }] },
+        { "nome": "elimina tutte macchinette", "relazioni": [{ "tipo": "include", "a": "elimina Macchinetta" }] },
+        { "nome": "elimina Macchinetta", "attori": ["Amministratore"] },
+        { "nome": "seleziona bevanda", "attori": ["Utente finale"] },
+        { "nome": "Cambia zucchero", "attori": ["Utente finale"] },
+        {
+          "nome": "inserire monete",
+          "attori": ["Utente finale"],
+          "extension_points": ["richiediIndietroMonete"],
+          "relazioni": [{ "tipo": "include", "a": "eroga bevanda" }]
+        },
+        { "nome": "eroga bevanda", "attori": ["Utente finale"] },
+        { "nome": "richiediIndietroMonete", "relazioni": [{ "tipo": "extend", "da": "inserire monete (EP richiediIndietroMonete)", "a": "richiediIndietroMonete" }] }
+      ]
+    },
+
+    {
+      "pagina": 3,
+      "tipo": "class_diagram_concettuale",
+      "titolo": "Diagramma delle classi – Vista concettuale",
+      "classi": [
+        { "nome": "Tecnico" },
+        { "nome": "Impiegato" },
+        { "nome": "Amministratore" },
+        { "nome": "Macchinetta" },
+        { "nome": "Scuola" },
+        { "nome": "UtenteFinale" }
+      ],
+      "associazioni": [
+        { "da": "Tecnico", "a": "Macchinetta", "nome": "aggiusta/svuota" },
+        { "da": "Tecnico", "a": "Macchinetta", "nome": "mostraMacchinetta" },
+        { "da": "Impiegato", "a": "Impiegato", "nome": "richiama" },
+        { "da": "Impiegato", "a": "Macchinetta", "nome": "mostraMacchinetta" },
+        { "da": "Impiegato", "a": "Scuola", "nome": "mostraScuola" },
+        { "da": "Amministratore", "a": "Impiegato", "nome": "richiamare" },
+        { "da": "Amministratore", "a": "Macchinetta", "nome": "aggiungi/elimina" },
+        { "da": "Amministratore", "a": "Scuola", "nome": "mostra" },
+        { "da": "Amministratore", "a": "Scuola", "nome": "modifica" },
+        { "da": "Amministratore", "a": "Scuola", "nome": "visualizza" },
+        { "da": "Macchinetta", "a": "Scuola", "tipo": "composizione", "molteplicita_da": "1..*", "molteplicita_a": "1..*" },
+        { "da": "Macchinetta", "a": "UtenteFinale", "nome": "interagisce" }
+      ]
+    },
+
+    {
+      "pagina": 4,
+      "tipo": "component_diagram",
+      "titolo": "Diagramma dei componenti – Architettura sistema",
+      "componenti": [
+        { "nome": "KEYCLOAK", "stereotipo": "component", "interfacce_fornite": ["Class6", "Class5"] },
+        { "nome": "DBMS MYSQL", "stereotipo": "component", "interfacce_fornite": ["driver sql Class"] },
+        {
+          "nome": "WEB APP", "stereotipo": "component",
+          "interfacce_richieste": ["API REST interface"],
+          "dipendenze": [{ "da": "KEYCLOAK", "interfaccia": "Class6/Class5" }]
+        },
+        {
+          "nome": "API SERVER", "stereotipo": "component",
+          "interfacce_richieste": ["driver sql Class", "API REST interface"],
+          "interfacce_fornite": ["MQTT interface Class4"],
+          "dipendenze": [
+            { "da": "DBMS MYSQL", "interfaccia": "driver sql" },
+            { "da": "WEB APP", "interfaccia": "API REST interface" }
+          ]
+        },
+        {
+          "nome": "BROKER Mosquitto", "stereotipo": "component",
+          "interfacce_richieste": ["MQTT interface Class4"],
+          "interfacce_fornite": ["MQTT Interface Class7", "MQTT Interface Class8"]
+        },
+        {
+          "nome": "SCUOLA", "tipo": "boundary",
+          "componenti_interni": [
+            { "nome": "Macchinetta", "stereotipo": "component", "collegata_a": "DBMS locale" },
+            { "nome": "DBMS locale", "stereotipo": "component" },
+            { "nome": "Macchinetta (2)", "stereotipo": "component", "collegata_a": "DBMS locale2" },
+            { "nome": "DBMS locale2", "stereotipo": "component" }
+          ],
+          "interfacce_richieste": ["MQTT Interface Class7", "MQTT Interface Class8"]
+        }
+      ]
+    },
+
+    {
+      "pagina": 5,
+      "tipo": "architettura_microcomponenti",
+      "titolo": "Architettura microcomponenti macchinetta",
+      "nota": "Input e output di ciascuna microcomponente sono approfonditi su un altro file per maggiore leggibilità",
+      "componenti": [
+        { "nome": "Cassa", "forma": "esagono" },
+        { "nome": "Interfaccia utente (tastiera + schermo)", "forma": "esagono" },
+        { "nome": "Erogatore", "forma": "esagono" },
+        { "nome": "Assistenza", "forma": "esagono" },
+        { "nome": "DBMS", "forma": "cilindro" },
+        { "nome": "Utente finale", "forma": "stickman" }
+      ],
+      "flussi": [
+        { "da": "Interfaccia utente", "a": "Cassa", "colore": "verde", "direzione": "bidirezionale" },
+        { "da": "Cassa", "a": "Assistenza", "colore": "viola", "direzione": "bidirezionale" },
+        { "da": "Interfaccia utente", "a": "Assistenza", "colore": "nero" },
+        { "da": "Erogatore", "a": "Assistenza", "colore": "nero" },
+        { "da": "DBMS", "a": "Interfaccia utente", "colore": "verde", "direzione": "bidirezionale" },
+        { "da": "DBMS", "a": "Erogatore", "colore": "verde", "direzione": "bidirezionale" },
+        { "da": "Utente finale", "a": "Interfaccia utente", "colore": "multicolore" }
+      ]
+    },
+
+    {
+      "pagina": 6,
+      "tipo": "class_diagram",
+      "titolo": "Diagramma delle classi – Interfacciautente e Assistenza",
+      "note": [
+        "createSubscriber e createPublisher creano subscriber/publisher MQTT con funzioni private/protected",
+        "Il main attiva il microservizio e i subscriber necessari",
+        "devOrTest sceglie quale database utilizzare (test o produzione)",
+        "listaSubscriber è ArrayList<MQTTSubscriber>",
+        "La GUI ha componenti e listener di eventi; funzioni private cambiano label e componenti in base ai messaggi ricevuti"
+      ],
+      "classi": [
+        {
+          "nome": "InterfacciaUtenteGUI",
+          "tipo": "GUI"
+        },
+        {
+          "nome": "Interfacciautente",
+          "attributi": [
+            "-int idMacchinetta",
+            "-String mqttUsername",
+            "-String mqttPassword",
+            "-String topicRadix",
+            "-ArrayList listaSubscriber"
+          ],
+          "metodi": [
+            "+Interfacciautente(int idmacchinetta, String password, String devOrTest)",
+            "+getTopicRadix() : String",
+            "+getListaSubscribers() : ArrayList<MQTTSubscriber>",
+            "-createSubscriber(String topic) : MQTTSubscriber",
+            "-createPublisher(String message, String topic)",
+            "+main(String[])",
+            "-sceltaRisposta(String currentTopic, String mex)",
+            "#getBevande() : List<String>"
+          ]
+        },
+        {
+          "nome": "Assistenza",
+          "attributi": [
+            "-int idMacchinetta",
+            "-String mqttUsername",
+            "-String mqttPassword",
+            "-String topicRadix",
+            "-ArrayList listaSubscriber"
+          ],
+          "metodi": [
+            "+Assistenza(int idmacchinetta, String password)",
+            "+getListaSubscribers() : ArrayList<MQTTSubscriber>",
+            "+getTopicRadix() : String",
+            "-createSubscriber(String topic) : MQTTSubscriber",
+            "-createPublisher(String message, String topic)",
+            "+main(String[])",
+            "-sceltaRisposta(String currentTopic, String mex)"
+          ]
+        },
+        { "nome": "ServerREST_MQTT" },
+        { "nome": "ServerREST", "nota": "La parte non relativa a MQTT è mostrata nel diagramma di classe della parte gestionale" }
+      ],
+      "relazioni": [
+        { "da": "InterfacciaUtenteGUI", "a": "Interfacciautente", "tipo": "dipendenza" },
+        { "da": "Interfacciautente", "a": "ServerREST_MQTT", "tipo": "connessione tramite broker MQTT" },
+        { "da": "Assistenza", "a": "ServerREST_MQTT", "tipo": "connessione tramite broker MQTT" },
+        { "da": "ServerREST_MQTT", "a": "ServerREST", "tipo": "associazione" }
+      ]
+    },
+
+    {
+      "pagina": 7,
+      "tipo": "class_diagram",
+      "titolo": "Diagramma delle classi – Cassa ed Erogatore",
+      "note": ["LinkedHashMap cialde è di tipo <String, Integer>"],
+      "classi": [
+        {
+          "nome": "DBManagement",
+          "metodi": [
+            "+readDBLocalAsJson(String devOrTest) : JsonObject",
+            "+getConnection() : Connection",
+            "+readDBLocalAsString() : String"
+          ]
+        },
+        {
+          "nome": "CassaMain",
+          "attributi": ["-int idMacchinetta"],
+          "metodi": [
+            "+CassaMain(int idMacchinetta)",
+            "+main(String args[])"
+          ]
+        },
+        {
+          "nome": "Cassa",
+          "attributi": [
+            "-int getIdMacchinetta",
+            "-double cassaTemporanea",
+            "-int capacità",
+            "-DBManagement db",
+            "-String mode"
+          ],
+          "metodi": [
+            "+getIdMacchinetta() : int",
+            "+getCassaTemporanea() : double",
+            "+getCapacità() : int",
+            "+setCassaTemporanea(double cassaTemporanea)",
+            "+cassaPiena() : boolean",
+            "+inserimentoMonete(double importo)",
+            "+ridaiTutto()",
+            "+controlloPrezzo(int numeroBevanda) : boolean",
+            "+daiResto(int numeroBevanda) : double",
+            "+leggiPrezzoDB(int numeroBevanda) : double",
+            "+leggiJsonCassa() : double",
+            "+writeDBLocale(double nuovoTotale)"
+          ]
+        },
+        {
+          "nome": "CassaAttesa",
+          "attributi": [
+            "-int idMacchinetta",
+            "-mqttUserName : String",
+            "-mqttPassword : String",
+            "-topicRadix : String",
+            "-listaSubscriber : ArrayList",
+            "-moneteQueue : BlockingQueue<Double>",
+            "-ridaiSoldiQueue : BlockingQueue<Boolean>",
+            "-numeroCaffeQueue : BlockingQueue<Integer>",
+            "-zuccheroQueue : BlockingQueue<Integer>"
+          ],
+          "metodi": [
+            "+sceltaRisposta(String currentTopic, String mex) : void",
+            "+publisherTo(String mex) : void",
+            "+startListening() : void",
+            "+invioGuasto() : void"
+          ]
+        },
+        {
+          "nome": "ErogatoreMain",
+          "attributi": ["-int idMacchinetta"],
+          "metodi": [
+            "+ErogatoreMain(int idMacchinetta)",
+            "+main(String args[])"
+          ]
+        },
+        {
+          "nome": "ErogatoreAttesa",
+          "attributi": [
+            "-int idMacchinetta",
+            "-mqttUserName : String",
+            "-mqttPassword : String",
+            "-topicRadix : String",
+            "-listaSubscriber : ArrayList",
+            "-numeroCaffeQueue : BlockingQueue<Integer>",
+            "-zuccheroQueue : BlockingQueue<Integer>"
+          ],
+          "metodi": [
+            "+sceltaRisposta(String currentTopic, String mex) : void",
+            "+publisherTo(String mex) : void",
+            "+startListening() : void",
+            "+invioGuasto() : void"
+          ]
+        }
+      ],
+      "relazioni": [
+        { "da": "CassaMain", "a": "Cassa", "tipo": "composizione" },
+        { "da": "CassaMain", "a": "CassaAttesa", "tipo": "composizione" },
+        { "da": "Cassa", "a": "DBManagement", "tipo": "uso" },
+        { "da": "ErogatoreMain", "a": "ErogatoreAttesa", "tipo": "composizione" },
+        { "da": "CassaAttesa", "a": "ErogatoreAttesa", "tipo": "connessione tramite broker MQTT" }
+      ]
+    },
+
+    {
+      "pagina": 8,
+      "tipo": "class_diagram",
+      "titolo": "Classe Erogatore",
+      "classi": [
+        {
+          "nome": "Erogatore",
+          "attributi": [
+            "-int idMacchinetta",
+            "-int numBevanda",
+            "-int zucchero",
+            "-LinkedHashMap cialde",
+            "-String mode",
+            "-DBManagement db"
+          ],
+          "metodi": [
+            "+Erogatore(int idMacchinetta, String mode)",
+            "+getIdMacchinetta() : int",
+            "+getNumBevanda() : int",
+            "+setNumBevanda(int num)",
+            "+getZucchero() : int",
+            "+getCialde() : HashMap<String, Integer>",
+            "+setZucchero(int zucchero)",
+            "+controlloCialde() : String",
+            "+aggiornaCialde()",
+            "+leggiCialdeDB(int numeroBevanda) : int[]",
+            "+leggiJsonCialde()",
+            "+writeDBLocale(int caffe, int latte, int the, int cioccolata, int zucchero, int bicchieri)"
+          ]
+        }
+      ]
+    },
+
+    {
+      "pagina": 9,
+      "tipo": "state_machine",
+      "titolo": "STM principale – Flusso utente finale sulla macchinetta",
+      "stato_iniziale": "accensione della macchinetta",
+      "stati": [
+        {
+          "nome": "MostraBevande",
+          "do": "MostraBevande",
+          "note": "Mostra l'elenco delle bevande disponibili (escludendo quelle non disponibili). Se la lista è vuota, bisogna contattare l'assistenza."
+        },
+        {
+          "nome": "TrovaPrezzo",
+          "entry": "TrovaPrezzo",
+          "do": "MostraPrezzo",
+          "note": "Dato il codice univoco della bevanda, ricavare il prezzo e mostrarlo all'utente."
+        },
+        { "nome": "CambiaZucchero", "do": "CambiaZucchero" },
+        { "nome": "InserireMonete", "do": "InserireMonete" },
+        { "nome": "ErogaBevanda", "do": "ErogaBevanda" },
+        { "nome": "RichiediIndietroMonete", "do": "RichiediIndietroMonete" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraBevande", "trigger": "accensione della macchinetta" },
+        { "da": "MostraBevande", "a": "TrovaPrezzo", "trigger": "l'utente sceglie la bevanda" },
+        { "da": "TrovaPrezzo", "a": "MostraBevande", "trigger": "l'utente preme canc" },
+        { "da": "TrovaPrezzo", "a": "CambiaZucchero", "trigger": "l'utente preme + o -" },
+        { "da": "TrovaPrezzo", "a": "InserireMonete", "trigger": "l'utente inserisce le monete" },
+        { "da": "CambiaZucchero", "a": "InserireMonete", "trigger": "l'utente preme enter" },
+        { "da": "InserireMonete", "a": "ErogaBevanda", "trigger": "l'utente preme enter" },
+        { "da": "InserireMonete", "a": "RichiediIndietroMonete", "trigger": "l'utente preme per riavere le proprie monete" },
+        { "da": "RichiediIndietroMonete", "a": "MostraBevande", "trigger": "monete erogate" },
+        { "da": "ErogaBevanda", "a": "MostraBevande", "trigger": "acquisto concluso" }
+      ]
+    },
+
+    {
+      "pagina": 10,
+      "tipo": "state_machine",
+      "id": "02",
+      "titolo": "STM utente_cambia_zucchero",
+      "note": [
+        "L'utente può aumentare o diminuire lo zucchero partendo da un valore già impostato precedentemente.",
+        "Non si può sottrarre sotto 0, né aggiungere oltre il massimo.",
+        "Se prima è stata fatta un'altra azione il valore parte dall'ultima modifica (tenendo conto di cialde e modifiche richieste).",
+        "Minimo 3 cialde oppure si blocca l'utilizzo dello zucchero.",
+        "Se clicco + o - più volte di fila: prendi il valore di zucchero selezionato prima di schiacciare +/-; controlla quante cialde rimarrebbero se l'acquisto fosse portato a termine."
+      ],
+      "stati": [
+        {
+          "nome": "ControlloCialdeZucchero",
+          "entry": "PrendiZucchero",
+          "do": "ModificaZucchero",
+          "exit": "ControlloCialdeZucchero"
+        },
+        { "nome": "SalvaValore", "do": "SalvaNuovoValore", "note": "Aggiunge/sottrae il valore a quello già presente e salva il valore parziale" },
+        { "nome": "MostraErrore", "entry": "MostraErrore(\"Non puoi aggiungere altro zucchero\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "ControlloCialdeZucchero", "trigger": "l'utente preme + o -" },
+        { "da": "ControlloCialdeZucchero", "a": "ControlloCialdeZucchero", "trigger": "non c'è più zucchero da togliere o aggiungere" },
+        { "da": "ControlloCialdeZucchero", "a": "SalvaValore", "guardia": "cialde sufficienti", "trigger": "l'utente preme + o -" },
+        { "da": "ControlloCialdeZucchero", "a": "MostraErrore", "guardia": "non è possibile aggiungere altre cialde" },
+        { "da": "SalvaValore", "a": "ControlloCialdeZucchero", "trigger": "l'utente preme + o -" },
+        { "da": "SalvaValore", "a": "fine", "trigger": "l'utente preme enter" },
+        { "da": "MostraErrore", "a": "fine", "trigger": "l'utente preme enter" },
+        { "da": "ControlloCialdeZucchero", "a": "fine", "trigger": "l'utente preme enter" }
+      ]
+    },
+
+    {
+      "pagina": 11,
+      "tipo": "state_machine",
+      "id": "03",
+      "titolo": "STM utente_inserire_monete",
+      "note": ["Controllo: moneta valida (del tipo ammesso: 5 cent, 10 cent, ...)"],
+      "stati": [
+        {
+          "nome": "ControllaCreditoInserito",
+          "do": "ControllaCreditoInserito"
+        },
+        {
+          "nome": "MostraCreditoInserito",
+          "entry": "SalvaValore",
+          "do": "MostraCreditoInserito",
+          "note": "Mostra il credito che l'utente ha inserito finora per questo acquisto"
+        },
+        { "nome": "EspelliMoneta", "do": "MostraCredito" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "ControllaCreditoInserito", "trigger": "l'utente inserisce una moneta" },
+        { "da": "ControllaCreditoInserito", "a": "MostraCreditoInserito", "guardia": "credito sufficiente" },
+        { "da": "ControllaCreditoInserito", "a": "EspelliMoneta", "guardia": "credito non sufficiente" },
+        { "da": "MostraCreditoInserito", "a": "ControllaCreditoInserito", "trigger": "l'utente inserisce un'altra moneta" },
+        { "da": "MostraCreditoInserito", "a": "fine", "trigger": "l'utente preme enter oppure si chiedono indietro le monete", "note": "Ok per inviare il pagamento oppure richiedere l'espulsione delle monete inserite finora" },
+        { "da": "EspelliMoneta", "a": "fine", "trigger": "si chiedono indietro le monete" }
+      ]
+    },
+
+    {
+      "pagina": 12,
+      "tipo": "state_machine",
+      "id": "04",
+      "titolo": "STM utente_richiedi_indietro_monete",
+      "stati": [
+        { "nome": "ControlloImportoInserito", "do": "ControlloImportoInserito" },
+        { "nome": "RestituisciCredito", "do": "RestituisciCredito", "note": "Espelle il credito che era stato inserito" },
+        { "nome": "MostraErrore", "do": "MostraErrore(\"Non hai inserito monete\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "ControlloImportoInserito", "trigger": "l'utente preme per ricevere le sue monete indietro" },
+        { "da": "ControlloImportoInserito", "a": "RestituisciCredito", "guardia": "sono state inserite monete in precedenza" },
+        { "da": "ControlloImportoInserito", "a": "MostraErrore", "guardia": "non sono state inserite monete" },
+        { "da": "RestituisciCredito", "a": "fine", "trigger": "erogazione monete" },
+        { "da": "MostraErrore", "a": "fine" }
+      ]
+    },
+
+    {
+      "pagina": 13,
+      "tipo": "state_machine",
+      "id": "05",
+      "titolo": "STM utente_eroga_bevanda",
+      "note": ["Dopo un controllo del credito inserito, la bevanda viene erogata se tutto è a posto. Viene anche erogato il resto (calcolato dalla cassa e comunicato all'erogatore) se possibile.", "In CalcoloResto, il pagamento viene salvato permanentemente"],
+      "stati": [
+        { "nome": "ControlloImportoTemporaneo", "do": "ControlloImportoTemporaneo" },
+        { "nome": "ErogaBevanda", "do": "ErogaBevanda" },
+        { "nome": "CalcoloResto", "do": "CalcoloResto" },
+        { "nome": "ErogaResto" },
+        { "nome": "MostraErrore_credito", "do": "MostraErrore(\"Credito inserito insufficiente.\")" },
+        { "nome": "MostraErrore_cassa", "do": "MostraErrore(\"Non sono presenti monete adatte in cassa\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "ControlloImportoTemporaneo", "trigger": "l'utente preme enter" },
+        { "da": "ControlloImportoTemporaneo", "a": "ErogaBevanda", "guardia": "credito sufficiente" },
+        { "da": "ControlloImportoTemporaneo", "a": "MostraErrore_credito", "guardia": "credito insufficiente" },
+        { "da": "MostraErrore_credito", "a": "fine" },
+        { "da": "ErogaBevanda", "a": "CalcoloResto", "trigger": "bevanda erogata" },
+        { "da": "CalcoloResto", "a": "ErogaResto", "guardia": "il resto può essere erogato almeno in parte" },
+        { "da": "CalcoloResto", "a": "MostraErrore_cassa", "guardia": "il resto non è disponibile" },
+        { "da": "ErogaResto", "a": "fine", "trigger": "resto erogato" },
+        { "da": "MostraErrore_cassa", "a": "fine", "trigger": "resto non erogato" }
+      ]
+    },
+
+    {
+      "pagina": 14,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza principale – Flusso utente finale (overview)",
+      "partecipanti": ["Utente", "InterfacciaUtente", "Casse", "Erogatore", "Assistenza", "DatabaseMacchinetta"],
+      "interazioni": [
+        { "loop": "flusso principale", "passi": [
+          { "da": "InterfacciaUtente", "a": "DatabaseMacchinetta", "messaggio": "1: Mostra bevande" },
+          { "da": "DatabaseMacchinetta", "a": "InterfacciaUtente", "messaggio": "1.1: Mostra bevande", "tipo": "risposta" },
+          { "da": "Utente", "a": "InterfacciaUtente", "messaggio": "2: l'utente sceglie una bevanda" },
+          { "da": "InterfacciaUtente", "a": "DatabaseMacchinetta", "messaggio": "2.1: TrovaPrezzo" },
+          { "da": "DatabaseMacchinetta", "a": "InterfacciaUtente", "messaggio": "2.2: MostraPrezzo", "tipo": "risposta" }
+        ]},
+        { "alt": [
+          { "guardia": "Dopo n secondi che l'utente non fa niente", "passi": [] },
+          { "guardia": "L'utente decide di cambiare bevanda", "passi": [
+            { "da": "InterfacciaUtente", "a": "DatabaseMacchinetta", "messaggio": "2.3: TrovaPrezzo" },
+            { "da": "DatabaseMacchinetta", "a": "InterfacciaUtente", "messaggio": "2.4: MostraPrezzo", "tipo": "risposta" }
+          ]},
+          { "guardia": "L'utente inserisce le monete", "passi": [
+            { "sd": "InserireMonete" }
+          ]}
+        ]},
+        { "da": "Utente", "a": "InterfacciaUtente", "messaggio": "3: l'utente preme un tasto" },
+        { "alt": [
+          { "guardia": "L'utente preme enter", "passi": [{ "sd": "ErogaBevanda" }] },
+          { "guardia": "L'utente preme per riavere indietro le proprie monete", "passi": [{ "sd": "RichiediIndietroMonete" }] },
+          { "guardia": "L'utente preme + o -", "passi": [{ "sd": "CambiaZucchero" }] }
+        ]},
+        { "da": "Utente", "a": "InterfacciaUtente", "messaggio": "4: l'utente preme enter" },
+        { "sd": "InserireMonete" },
+        { "alt": [
+          { "guardia": "L'utente preme enter", "passi": [{ "sd": "ErogaBevanda" }] },
+          { "guardia": "L'utente preme per riavere indietro le proprie monete", "passi": [{ "sd": "RichiediIndietroMonete" }] }
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 15,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza CambiaZucchero",
+      "partecipanti": ["Utente", "Interfaccia Utente", "MacchinettaDB"],
+      "note": ["In entrata, l'utente aveva premuto + o -", "Azione non possibile: si prova a cliccare + o - più di quelle consentite. In questi casi non si fa nulla, il valore salvato non si modifica."],
+      "interazioni": [
+        { "loop": "Se l'utente non ha ancora premuto enter", "passi": [
+          { "da": "Interfaccia Utente", "a": "MacchinettaDB", "messaggio": "1: PrendiZucchero" },
+          { "da": "MacchinettaDB", "a": "Interfaccia Utente", "messaggio": "1.1: PrendiZucchero", "tipo": "risposta" },
+          { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "2: ModificaZucchero" },
+          { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "3: ControlloZucchero" },
+          { "alt": [
+            { "guardia": "Cialde sufficienti e azione possibile", "passi": [
+              { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "4: SalvaValore" }
+            ]},
+            { "guardia": "l'utente preme enter", "passi": [] },
+            { "guardia": "l'utente preme + o -", "passi": [] },
+            { "guardia": "Cialde non sufficienti", "passi": [
+              { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "5: MostraErrore" }
+            ]},
+            { "guardia": "azione non possibile: non c'è più zucchero da togliere o aggiungere", "passi": [] }
+          ]},
+          { "da": "Utente", "a": "Interfaccia Utente", "messaggio": "6: l'utente preme enter" }
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 16,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza InserireMonete",
+      "partecipanti": ["Utente", "Interfaccia Utente", "Cassa"],
+      "note": ["Cassa temporanea"],
+      "interazioni": [
+        { "loop": "l'utente non ha ancora premuto enter o RidaiMonete", "passi": [
+          { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "1: ControllaCredito" },
+          { "alt": [
+            { "guardia": "Moneta valida", "passi": [
+              { "da": "Interfaccia Utente", "a": "Cassa", "messaggio": "2: SalvaValore" },
+              { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "2.1: MostraCreditoInserito", "tipo": "risposta" },
+              { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "3: MostraCreditoInserito" }
+            ]},
+            { "guardia": "Credito non sufficiente", "passi": [
+              { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "4: Espelli moneta" },
+              { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "5: MostraCredito" }
+            ]}
+          ]},
+          { "alt": [
+            { "guardia": "L'utente inserisce un'altra moneta", "passi": [] },
+            { "guardia": "L'utente richiede le monete indietro", "passi": [] }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 17,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza RichiediIndietroMonete",
+      "partecipanti": ["Utente", "Interfaccia Utente", "Cassa"],
+      "interazioni": [
+        { "da": "Interfaccia Utente", "a": "Cassa", "messaggio": "1: ControlloImportoInserito" },
+        { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "1.1: Result", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "sono state inserite monete in precedenza", "passi": [
+            { "da": "Cassa", "a": "Cassa", "messaggio": "1.2: RestituisciCredito" },
+            { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "1.3: RestituisciCredito", "tipo": "risposta" }
+          ]},
+          { "guardia": "non sono state inserite monete in precedenza", "passi": [
+            { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "2: MostraErrore" }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 18,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza ErogaBevanda",
+      "partecipanti": ["Utente", "Interfaccia Utente", "Cassa", "Erogatore"],
+      "interazioni": [
+        { "da": "Interfaccia Utente", "a": "Cassa", "messaggio": "1: ControlloImportoTemporaneo" },
+        { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "1.1: ImportoTemporaneo", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "credito insufficiente", "passi": [
+            { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "2: MostraErrore" }
+          ]},
+          { "guardia": "credito sufficiente", "passi": [
+            { "da": "Cassa", "a": "Erogatore", "messaggio": "1.2: ErogaBevanda" },
+            { "da": "Erogatore", "a": "Interfaccia Utente", "messaggio": "1.2.1: bevanda erogata", "tipo": "risposta" },
+            { "da": "Cassa", "a": "Cassa", "messaggio": "1.3: Calcolo Resto" },
+            { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "1.4: RisultatoControlloResto", "tipo": "risposta" },
+            { "alt": [
+              { "guardia": "Il resto può essere erogato almeno in parte", "passi": [
+                { "da": "Interfaccia Utente", "a": "Cassa", "messaggio": "1.4.1: ErogaResto" },
+                { "da": "Cassa", "a": "Interfaccia Utente", "messaggio": "1.4.1.1: Resto", "tipo": "risposta" }
+              ]},
+              { "guardia": "Il resto non può essere erogato", "passi": [
+                { "da": "Interfaccia Utente", "a": "Interfaccia Utente", "messaggio": "1.4.1.1: MostraErrore" }
+              ]}
+            ]}
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 19,
+      "tipo": "state_machine",
+      "titolo": "STM navigazione utente amministrativo (login e menu)",
+      "stati": [
+        { "nome": "MostraLogin", "do": "MostraLogin" },
+        { "nome": "VerificaCredenziali", "do": "VerificaCredenziali" },
+        { "nome": "MostraErrore", "do": "MostraErrore" },
+        { "nome": "MostraMenuAmministratore", "do": "MostraMenuAmministratore" },
+        { "nome": "MostraMenuImpiegato", "do": "MostraMenuImpiegato" },
+        { "nome": "Elenco_tutte_macchinette", "tipo": "referenced_state_machine" },
+        { "nome": "Elenco_istituti", "tipo": "referenced_state_machine" },
+        { "nome": "Amministratore_aggiungi_scuola", "tipo": "referenced_state_machine" },
+        { "nome": "Amministratore_aggiungi_macchinetta", "tipo": "referenced_state_machine" },
+        { "nome": "Amministratore_elimina_scuola", "tipo": "referenced_state_machine" },
+        { "nome": "Amministratore_elimina_macchinetta", "tipo": "referenced_state_machine" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraLogin", "trigger": "Utente amministrativo si collega al sito web" },
+        { "da": "MostraLogin", "a": "VerificaCredenziali", "trigger": "utente inserisce le credenziali" },
+        { "da": "VerificaCredenziali", "a": "MostraErrore", "guardia": "login fallito" },
+        { "da": "MostraErrore", "a": "MostraLogin", "trigger": "utente clicca ok" },
+        { "da": "VerificaCredenziali", "a": "MostraMenuAmministratore", "guardia": "amministratore loggato" },
+        { "da": "VerificaCredenziali", "a": "MostraMenuImpiegato", "guardia": "impiegato loggato" },
+        { "da": "MostraMenuAmministratore", "a": "fine", "trigger": "utente si scollega dal sito" },
+        { "da": "MostraMenuAmministratore", "a": "Amministratore_aggiungi_scuola", "trigger": "utente clicca pulsante per aggiungere scuola" },
+        { "da": "MostraMenuAmministratore", "a": "Amministratore_aggiungi_macchinetta", "trigger": "utente clicca pulsante per aggiungere macchinetta" },
+        { "da": "MostraMenuAmministratore", "a": "Amministratore_elimina_scuola", "trigger": "utente clicca pulsante per eliminare scuola" },
+        { "da": "MostraMenuAmministratore", "a": "Amministratore_elimina_macchinetta", "trigger": "utente clicca pulsante per eliminare macchinetta" },
+        { "da": "MostraMenuAmministratore", "a": "Elenco_macchinette", "trigger": "utente clicca pulsante per vedere elenco macchinette" },
+        { "da": "MostraMenuAmministratore", "a": "Elenco_istituti", "trigger": "utente clicca pulsante per vedere elenco istituti" },
+        { "da": "MostraMenuImpiegato", "a": "fine", "trigger": "utente si scollega dal sito" },
+        { "da": "MostraMenuImpiegato", "a": "Elenco_tutte_macchinette", "trigger": "utente clicca pulsante per vedere elenco macchinette" },
+        { "da": "MostraMenuImpiegato", "a": "Elenco_istituti", "trigger": "utente clicca pulsante per vedere elenco istituti" }
+      ]
+    },
+
+    {
+      "pagina": 20,
+      "tipo": "state_machine",
+      "titolo": "STM Amministratore_aggiungi_scuola",
+      "stati": [
+        { "nome": "MostraForm", "do": "MostraForm" },
+        { "nome": "ControllaElencoScuole", "do": "ControllaElencoScuole" },
+        { "nome": "AggiungiScuola", "do": "AggiungiScuola" },
+        { "nome": "MostraErrore_dati", "do": "MostraErrore(\"Dati non validi\")" },
+        { "nome": "MostraErrore_esistente", "do": "MostraErrore(\"Scuola già esistente\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraForm", "trigger": "l'amministratore preme aggiungi scuola" },
+        { "da": "MostraForm", "a": "ControllaElencoScuole", "trigger": "l'amministratore compila il form correttamente" },
+        { "da": "MostraForm", "a": "MostraErrore_dati", "trigger": "l'amministratore compila il form non correttamente" },
+        { "da": "MostraErrore_dati", "a": "MostraForm", "trigger": "ritorno al form" },
+        { "da": "ControllaElencoScuole", "a": "AggiungiScuola", "guardia": "scuola non esistente" },
+        { "da": "ControllaElencoScuole", "a": "MostraErrore_esistente", "guardia": "scuola esistente" },
+        { "da": "MostraErrore_esistente", "a": "MostraForm", "trigger": "ritorno al form" },
+        { "da": "AggiungiScuola", "a": "fine", "trigger": "l'utente preme \"OK\"" },
+        { "da": "MostraForm", "a": "fine", "trigger": "l'amministratore esce dal form" }
+      ]
+    },
+
+    {
+      "pagina": 21,
+      "tipo": "state_machine",
+      "titolo": "STM Amministratore_aggiungi_macchinetta",
+      "stati": [
+        { "nome": "MostraForm", "do": "MostraForm" },
+        { "nome": "AggiungiMacchinetta", "do": "AggiungiMacchinetta" },
+        { "nome": "AggiungiScuola", "tipo": "referenced_state_machine" },
+        { "nome": "MostraErrore", "do": "MostraErrore(\"Errore nella compilazione del form\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraForm" },
+        { "da": "MostraForm", "a": "MostraErrore", "trigger": "amministratore clicca per aggiungere una scuola" },
+        { "da": "MostraErrore", "a": "MostraForm", "guardia": "form non compilato correttamente", "trigger": "l'utente preme \"ok\"" },
+        { "da": "MostraErrore", "a": "AggiungiScuola" },
+        { "da": "AggiungiScuola", "a": "fine", "trigger": "amministratore è uscito dal form o ha creato la scuola" },
+        { "da": "MostraForm", "a": "AggiungiMacchinetta", "guardia": "scuola esistente e form compilato correttamente" },
+        { "da": "AggiungiMacchinetta", "a": "fine", "trigger": "macchinetta aggiunta" },
+        { "da": "MostraForm", "a": "fine", "trigger": "l'amministratore esce dal form" }
+      ]
+    },
+
+    {
+      "pagina": 22,
+      "tipo": "state_machine",
+      "titolo": "STM Amministratore_elimina_scuola",
+      "stati": [
+        { "nome": "InserimentoIDScuola", "do": "MostraForm" },
+        { "nome": "RichiediConferma", "do": "MostraFormEliminaScuola", "note": "\"Vuoi davvero eliminare questa scuola?\"" },
+        { "nome": "EliminaTutteMacchinette", "tipo": "referenced_state_machine" },
+        { "nome": "EliminaScuola", "do": "EliminaScuola" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "InserimentoIDScuola" },
+        { "da": "InserimentoIDScuola", "a": "RichiediConferma", "trigger": "l'amministratore clicca sulla scuola da eliminare" },
+        { "da": "RichiediConferma", "a": "EliminaTutteMacchinette", "guardia": "si" },
+        { "da": "RichiediConferma", "a": "fine", "guardia": "no" },
+        { "da": "EliminaTutteMacchinette", "a": "EliminaScuola", "trigger": "macchinette eliminate" },
+        { "da": "EliminaScuola", "a": "fine", "trigger": "l'amministratore preme \"ok\"" },
+        { "da": "InserimentoIDScuola", "a": "fine", "trigger": "l'amministratore esce dal form" }
+      ]
+    },
+
+    {
+      "pagina": 23,
+      "tipo": "state_machine",
+      "titolo": "STM Amministratore_elimina_macchinetta (pagina 23)",
+      "note": ["Può essere l'amministratore o una funzione chiamante"],
+      "stati": [
+        { "nome": "VerificaEsistenza", "do": "ControlloIDMacchinetta" },
+        { "nome": "RichiediConferma", "do": "MostraForm" },
+        { "nome": "EliminaMacchinettaDaElenco", "do": "EliminaMacchinettaDaElenco" },
+        { "nome": "MostraErrore", "do": "MostraErrore(\"Macchinetta non trovata\")" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "VerificaEsistenza", "trigger": "in input arriva l'id della macchinetta da eliminare" },
+        { "da": "VerificaEsistenza", "a": "RichiediConferma", "guardia": "macchinetta trovata" },
+        { "da": "VerificaEsistenza", "a": "MostraErrore", "guardia": "macchinetta non trovata" },
+        { "da": "MostraErrore", "a": "fine", "trigger": "l'amministratore preme \"ok\"" },
+        { "da": "RichiediConferma", "a": "EliminaMacchinettaDaElenco", "trigger": "amministratore clicca ok" },
+        { "da": "RichiediConferma", "a": "fine", "guardia": "non si vuole eliminare la macchinetta" },
+        { "da": "EliminaMacchinettaDaElenco", "a": "fine" }
+      ]
+    },
+
+    {
+      "pagina": 24,
+      "tipo": "state_machine",
+      "titolo": "STM Amministratore_elimina_macchinetta (pagina 24 – duplicato di pagina 23)",
+      "nota": "Contenuto identico alla pagina 23",
+      "riferimento": "pagina 23"
+    },
+
+    {
+      "pagina": 25,
+      "tipo": "state_machine",
+      "titolo": "STM Elenco_istituti",
+      "stati": [
+        { "nome": "MostraElencoIstituti", "do": "MostraElenco" },
+        { "nome": "Elenco_macchinette", "tipo": "referenced_state_machine" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraElencoIstituti", "trigger": "utente clicca pulsante per vedere tutti gli istituti" },
+        { "da": "MostraElencoIstituti", "a": "fine", "trigger": "utente clicca per uscire" },
+        { "da": "MostraElencoIstituti", "a": "Elenco_macchinette", "trigger": "utente clicca sopra una specifica scuola" },
+        { "da": "Elenco_macchinette", "a": "fine", "trigger": "utente clicca per uscire" }
+      ]
+    },
+
+    {
+      "pagina": 26,
+      "tipo": "state_machine",
+      "titolo": "STM Elenco_macchinette_scuola",
+      "stati": [
+        { "nome": "MostraElencoMacchinetteSScuola", "do": "MostraElenco" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraElencoMacchinetteSScuola", "trigger": "utente clicca sopra una specifica scuola" },
+        { "da": "MostraElencoMacchinetteSScuola", "a": "fine", "trigger": "utente clicca per uscire" }
+      ]
+    },
+
+    {
+      "pagina": 27,
+      "tipo": "state_machine",
+      "titolo": "STM Elenco_macchinette (impiegato – tutte le macchinette)",
+      "stati": [
+        { "nome": "MostraElencoMacchinette", "do": "MostraElenco" },
+        { "nome": "Controllo_stato_macchinetta_Id", "tipo": "referenced_state_machine" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraElencoMacchinette", "trigger": "l'utente clicca pulsante per vedere elenco macchinette" },
+        { "da": "MostraElencoMacchinette", "a": "fine", "trigger": "utente preme per uscire" },
+        { "da": "MostraElencoMacchinette", "a": "Controllo_stato_macchinetta_Id", "trigger": "utente clicca su una macchinetta" },
+        { "da": "Controllo_stato_macchinetta_Id", "a": "fine", "trigger": "utente preme per uscire" }
+      ]
+    },
+
+    {
+      "pagina": 28,
+      "tipo": "state_machine",
+      "titolo": "STM Controllo_stato_macchinetta",
+      "note": ["Il tecnico ha accesso alle richieste, quindi vede una richiesta di guasto e va in loco oppure a parole gli amministrativi comunicano con il tecnico"],
+      "stati": [
+        { "nome": "MostraStatoMacchinetta", "do": "MostraStatoMacchinetta" },
+        { "nome": "InviaTecnico" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraStatoMacchinetta", "trigger": "utente clicca su una macchinetta" },
+        { "da": "MostraStatoMacchinetta", "a": "fine", "trigger": "utente clicca per uscire" },
+        { "da": "MostraStatoMacchinetta", "a": "InviaTecnico", "guardia": "è presente un flag guasto" },
+        { "da": "InviaTecnico", "a": "fine", "guardia": "tecnico inviato con successo" }
+      ]
+    },
+
+    {
+      "pagina": 29,
+      "tipo": "state_machine",
+      "titolo": "STM Tecnico – Completamento richiesta",
+      "stati": [
+        { "nome": "MostraReport", "do": "MostraReport" },
+        { "nome": "Svuota_cassa", "tipo": "referenced_state_machine" },
+        { "nome": "Riempi_cialde", "tipo": "referenced_state_machine" },
+        { "nome": "Riempi_bicchierini", "tipo": "referenced_state_machine" },
+        { "nome": "Aggiungi_zucchero", "tipo": "referenced_state_machine" },
+        { "nome": "Aggiusta_macchinetta", "tipo": "referenced_state_machine" }
+      ],
+      "transizioni": [
+        { "da": "inizio", "a": "MostraReport", "trigger": "tecnico accede alla richiesta di invioTecnico" },
+        { "da": "MostraReport", "a": "fine", "trigger": "tecnico fa finta di niente, la richiesta rimane aperta" },
+        { "da": "MostraReport", "a": "Svuota_cassa", "guardia": "flag cassa piena" },
+        { "da": "MostraReport", "a": "Riempi_cialde", "guardia": "flag cialde in esaurimento" },
+        { "da": "MostraReport", "a": "Riempi_bicchierini", "guardia": "flag bicchierini in esaurimento" },
+        { "da": "MostraReport", "a": "Aggiungi_zucchero", "guardia": "flag zucchero in esaurimento" },
+        { "da": "MostraReport", "a": "Aggiusta_macchinetta", "guardia": "flag guasto generico" },
+        { "da": "Svuota_cassa", "a": "fine", "trigger": "guasto risolto, tecnico elimina la richiesta" },
+        { "da": "Riempi_cialde", "a": "fine", "trigger": "guasto risolto, tecnico elimina la richiesta" },
+        { "da": "Riempi_bicchierini", "a": "fine", "trigger": "guasto risolto, tecnico elimina la richiesta" },
+        { "da": "Aggiungi_zucchero", "a": "fine", "trigger": "guasto risolto, tecnico elimina la richiesta" },
+        { "da": "Aggiusta_macchinetta", "a": "fine", "trigger": "guasto risolto, tecnico elimina la richiesta" }
+      ]
+    },
+
+    {
+      "pagina": 30,
+      "tipo": "state_machine",
+      "titolo": "STM SvuotaCassa",
+      "stati": [{ "nome": "SvuotaCassa", "do": "SvuotaCassa" }],
+      "transizioni": [
+        { "da": "inizio", "a": "SvuotaCassa", "guardia": "flag cassa piena" },
+        { "da": "SvuotaCassa", "a": "fine", "guardia": "guasto risolto" }
+      ]
+    },
+
+    {
+      "pagina": 31,
+      "tipo": "state_machine",
+      "titolo": "STM RiempiCialde",
+      "stati": [{ "nome": "RiempiCialde", "do": "RiempiCialde" }],
+      "transizioni": [
+        { "da": "inizio", "a": "RiempiCialde", "guardia": "flag cialde in esaurimento" },
+        { "da": "RiempiCialde", "a": "fine", "guardia": "guasto risolto" }
+      ]
+    },
+
+    {
+      "pagina": 32,
+      "tipo": "state_machine",
+      "titolo": "STM RiempiBicchierini",
+      "stati": [{ "nome": "RiempiBicchierini", "do": "RiempiBicchierini" }],
+      "transizioni": [
+        { "da": "inizio", "a": "RiempiBicchierini", "guardia": "flag bicchierini in esaurimento" },
+        { "da": "RiempiBicchierini", "a": "fine", "guardia": "guasto risolto" }
+      ]
+    },
+
+    {
+      "pagina": 33,
+      "tipo": "state_machine",
+      "titolo": "STM AggiungiZucchero",
+      "stati": [{ "nome": "AggiungiZucchero", "do": "AggiungiZucchero" }],
+      "transizioni": [
+        { "da": "inizio", "a": "AggiungiZucchero", "guardia": "flag zucchero in esauimento" },
+        { "da": "AggiungiZucchero", "a": "fine", "guardia": "guasto risolto" }
+      ]
+    },
+
+    {
+      "pagina": 34,
+      "tipo": "state_machine",
+      "titolo": "STM AggiustaMacchinetta (LavoroSullaMacchinetta)",
+      "stati": [{ "nome": "LavoroSullaMacchinetta", "do": "LavoroSullaMacchinetta" }],
+      "transizioni": [
+        { "da": "inizio", "a": "LavoroSullaMacchinetta", "guardia": "flag guasto generico" },
+        { "da": "LavoroSullaMacchinetta", "a": "fine", "guardia": "guasto risolto" }
+      ]
+    },
+
+    {
+      "pagina": 35,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza login e menu utente amministrativo (overview)",
+      "partecipanti": ["UTENTE AMMINISTRATIVO", "UI WEB APP", "KEYCLOCK SERVER", "API SERVER", "DBMS MySQL"],
+      "interazioni": [
+        { "da": "UTENTE AMMINISTRATIVO", "a": "UI WEB APP", "messaggio": "1: utente si collega al sito web" },
+        { "da": "UI WEB APP", "a": "UTENTE AMMINISTRATIVO", "messaggio": "1.1: MostraLogin()", "tipo": "risposta" },
+        { "da": "UTENTE AMMINISTRATIVO", "a": "UI WEB APP", "messaggio": "2: utente inserisce le proprie credenziali" },
+        { "da": "UI WEB APP", "a": "KEYCLOCK SERVER", "messaggio": "2.1: VerificaCredenziali()" },
+        { "da": "KEYCLOCK SERVER", "a": "UI WEB APP", "messaggio": "2.2: Response Server", "tipo": "risposta" },
+        { "loop": "Fino a che le credenziali non sono corrette", "passi": [
+          { "da": "UTENTE AMMINISTRATIVO", "a": "UI WEB APP", "messaggio": "3: utente preme ok" },
+          { "da": "UI WEB APP", "a": "UTENTE AMMINISTRATIVO", "messaggio": "3.1: MostraErrore", "tipo": "risposta" }
+        ]},
+        { "alt": [
+          { "guardia": "amministratore loggato", "passi": [
+            { "da": "UI WEB APP", "a": "UTENTE AMMINISTRATIVO", "messaggio": "3.2: MostraMenuAmministratore()", "tipo": "risposta" },
+            { "loop": "fino a che l'utente non si scollega dal sito", "passi": [
+              { "alt": [
+                { "guardia": "utente clicca aggiungi scuola", "passi": [{ "sd": "Amministratore_aggiungi_scuola" }] },
+                { "guardia": "utente clicca aggiungi macchinetta", "passi": [{ "sd": "Amministratore_aggiungi_macchinetta" }] },
+                { "guardia": "utente clicca elimina scuola", "passi": [{ "sd": "Amministratore_elimina_scuola" }] },
+                { "guardia": "utente clicca elimina macchinetta", "passi": [{ "sd": "Amministratore_elimina_macchinetta" }] },
+                { "guardia": "utente clicca elenco macchinette", "passi": [{ "sd": "Elenco_macchinette" }] },
+                { "guardia": "utente clicca elenco istituti", "passi": [{ "sd": "Elenco_istituti" }] }
+              ]}
+            ]}
+          ]},
+          { "guardia": "impiegato loggato", "passi": [
+            { "da": "UI WEB APP", "a": "UTENTE AMMINISTRATIVO", "messaggio": "3.3: MostraMenuImpiegato()", "tipo": "risposta" },
+            { "loop": "fino a che l'utente non si scollega dal sito", "passi": [
+              { "alt": [
+                { "guardia": "utente clicca su elenco macchinette", "passi": [{ "sd": "Elenco_tutte_macchinette" }] },
+                { "guardia": "utente clicca su elenco istituti", "passi": [{ "sd": "Elenco_istituti" }] }
+              ]}
+            ]}
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 36,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Amministratore_aggiungi_scuola",
+      "partecipanti": ["Amministratore", "Web App", "Server REST", "DBMS MYSQL"],
+      "note": ["Sarà possibile uscire dal loop in due modi: con la x, o con la scuola aggiunta premendo \"OK\""],
+      "interazioni": [
+        { "da": "Amministratore", "a": "Web App", "messaggio": "1: l'amministratore preme aggiungi scuola" },
+        { "loop": "Se non si esce / preme per uscire dal form oppure se si completa la creazione con successo", "passi": [
+          { "da": "Web App", "a": "Web App", "messaggio": "1.1: MostraForm", "tipo": "risposta" },
+          { "alt": [
+            { "guardia": "l'amministratore compila il form correttamente", "passi": [
+              { "da": "Web App", "a": "Server REST", "messaggio": "1.2: ControllaElencoScuole" },
+              { "da": "Server REST", "a": "DBMS MYSQL", "messaggio": "1.2.1: ControllaElencoScuole" },
+              { "da": "DBMS MYSQL", "a": "Server REST", "messaggio": "1.2.2: ElencoScuole", "tipo": "risposta" },
+              { "alt": [
+                { "guardia": "la scuola non esiste ancora", "passi": [
+                  { "da": "Server REST", "a": "DBMS MYSQL", "messaggio": "1.2.3: AggiungiScuola" },
+                  { "da": "DBMS MYSQL", "a": "Server REST", "messaggio": "1.2.3.1: RitornaIDScuola", "tipo": "risposta" },
+                  { "da": "Server REST", "a": "Web App", "messaggio": "1.2.3.1.1: RitornaIDScuola", "tipo": "risposta" },
+                  { "da": "Amministratore", "a": "Web App", "messaggio": "2: l'amministratore preme OK" }
+                ]},
+                { "guardia": "la scuola esiste già", "passi": [
+                  { "da": "Web App", "a": "Web App", "messaggio": "1.2.3.1.1.1: MostraErrore" }
+                ]}
+              ]}
+            ]},
+            { "guardia": "l'amministratore non compila il form correttamente", "passi": [
+              { "da": "Web App", "a": "Web App", "messaggio": "3: MostraErrore" }
+            ]},
+            { "guardia": "l'amministratore preme per uscire dal form", "passi": [] }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 37,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Amministratore_aggiungi_macchinetta",
+      "partecipanti": ["Amministratore", "Web App", "Server REST", "DBMS MySQL"],
+      "interazioni": [
+        { "da": "Amministratore", "a": "Web App", "messaggio": "1: l'amministratore preme aggiungi macchinetta" },
+        { "loop": "L'amministratore non esce dal form fino alla creazione della scuola e non si verificano errori nella creazione", "passi": [
+          { "da": "Web App", "a": "Web App", "messaggio": "1.1: MostraForm", "tipo": "risposta" },
+          { "alt": [
+            { "guardia": "L'amministratore preme per uscire dal form", "passi": [] },
+            { "guardia": "scuola esistente e form compilato correttamente", "passi": [
+              { "da": "Web App", "a": "Server REST", "messaggio": "1.2: AggiungiMacchinetta" },
+              { "da": "Server REST", "a": "DBMS MySQL", "messaggio": "1.2.1: AggiungiMacchinetta" }
+            ]},
+            { "guardia": "form non compilato correttamente", "passi": [
+              { "da": "Web App", "a": "Web App", "messaggio": "1.3: MostraErrore" }
+            ]},
+            { "guardia": "amministratore clicca per aggiungere una scuola", "passi": [
+              { "da": "Web App", "a": "Web App", "messaggio": "2.1: MostraFormRichiestaCreazioneScuola" },
+              { "sd": "AggiungiScuola" }
+            ]}
+          ]},
+          { "da": "Amministratore", "a": "Web App", "messaggio": "2: l'amministratore preme OK" }
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 38,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Amministratore_elimina_scuola",
+      "partecipanti": ["Amministratore", "Web App", "Server REST", "DBMS MySQL"],
+      "interazioni": [
+        { "da": "Amministratore", "a": "Web App", "messaggio": "1: amministratore clicca la scuola da eliminare nell'elenco" },
+        { "da": "Web App", "a": "DBMS MySQL", "messaggio": "1.1: elimina scuola" },
+        { "da": "DBMS MySQL", "a": "Web App", "messaggio": "1.2: result", "tipo": "risposta" },
+        { "da": "Web App", "a": "Web App", "messaggio": "1.3: MostraFormEliminaScuola" },
+        { "loop": "l'amministratore non esce dal form / l'operazione non è ancora stata completata con successo", "passi": [
+          { "da": "Amministratore", "a": "Web App", "messaggio": "2: l'amministratore preme OK" },
+          { "sd": "EliminaTutteMacchinette" },
+          { "da": "Web App", "a": "Server REST", "messaggio": "3: EliminaScuola" },
+          { "da": "Server REST", "a": "DBMS MySQL", "messaggio": "3: EliminaScuola" },
+          { "da": "DBMS MySQL", "a": "Server REST", "messaggio": "3.1: EliminaScuola", "tipo": "risposta" },
+          { "da": "Amministratore", "a": "Web App", "messaggio": "4: l'amministratore preme OK" }
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 39,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Amministratore_elimina_macchinetta",
+      "partecipanti": ["Amministratore", "Web App", "Server REST", "DBMS MySQL"],
+      "note": ["può arrivare dall'amministratore o da una funzione chiamante", "Deve svuotare la cassa nel Database e quella temporanea", "A questo punto, se necessario al prossimo controllo automatico verrà eliminata una scuola senza macchinette"],
+      "interazioni": [
+        { "da": "Web App", "a": "Server REST", "messaggio": "1: in input l'id della macchinetta da eliminare" },
+        { "da": "Server REST", "a": "DBMS MySQL", "messaggio": "1.1: ControlloIDMacchinetta" },
+        { "da": "DBMS MySQL", "a": "Server REST", "messaggio": "1.2: ControlloMacchinetta", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "La macchinetta non esiste", "passi": [
+            { "da": "Web App", "a": "Web App", "messaggio": "2: MostraErrore" }
+          ]},
+          { "guardia": "La macchinetta esiste", "passi": [
+            { "da": "Web App", "a": "Web App", "messaggio": "3: MostraFormConfermaEliminazione" },
+            { "da": "Web App", "a": "Server REST", "messaggio": "4: InvioRisposta" },
+            { "alt": [
+              { "guardia": "si", "passi": [
+                { "da": "Server REST", "a": "DBMS MySQL", "messaggio": "4.1: EliminaMacchinettaDaElenco" },
+                { "da": "Server REST", "a": "Web App", "messaggio": "4.2: ConfirmaEliminazione", "tipo": "risposta" }
+              ]},
+              { "guardia": "no", "passi": [] }
+            ]}
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 40,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza EliminaTutteMacchinette",
+      "partecipanti": ["Amministratore", "Web App", "Server REST", "DBMS MySQL"],
+      "interazioni": [
+        { "da": "Web App", "a": "Server REST", "messaggio": "1: in input l'id della scuola da eliminare" },
+        { "da": "Server REST", "a": "DBMS MySQL", "messaggio": "1.1: RicavaElencoMacchinette" },
+        { "da": "DBMS MySQL", "a": "Server REST", "messaggio": "1.2: ElencoMacchinette", "tipo": "risposta" },
+        { "da": "Server REST", "a": "Web App", "messaggio": "2: MostraFormConfermaEliminazioneMacchinette" },
+        { "alt": [
+          { "guardia": "no", "passi": [] },
+          { "guardia": "si", "passi": [
+            { "loop": "ci sono ancora macchinette da eliminare", "passi": [
+              { "da": "Server REST", "a": "Server REST", "messaggio": "1.3: SelezionaMacchinetta" },
+              { "sd": "EliminaMacchinetta" }
+            ]}
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 41,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Elenco_istituti",
+      "partecipanti": ["Utente amministrativo", "UI WEB", "API SERVER", "DBMS My SQL"],
+      "interazioni": [
+        { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "1: utente clicca per vedere tutti gli istituti" },
+        { "da": "UI WEB", "a": "API SERVER", "messaggio": "1.1: MostraElencoIstituti()" },
+        { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "1.1.1: MostraElencoIstituti()" },
+        { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "1.1.1.1: elenco istituti", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "cliente clicca per uscire", "passi": [
+            { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "2: utente clicca per uscire" }
+          ]},
+          { "guardia": "utente clicca su una scuola specifica", "passi": [
+            { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "3: utente clicca su una specifica scuola" },
+            { "da": "UI WEB", "a": "API SERVER", "messaggio": "3.1: MostraElencoMacchinetteScuola()" },
+            { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "3.1.1: MostraElencoMacchinetteScuola()" },
+            { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "3.1.1.1: elenco macchinette della scuola", "tipo": "risposta" },
+            { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "4: utente clicca per uscire" }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 42,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Elenco_macchinette (tutte)",
+      "partecipanti": ["Utente amministrativo", "UI WEB", "API SERVER", "DBMS My SQL"],
+      "interazioni": [
+        { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "1: utente clicca per vedere elenco di tutte le macchinette" },
+        { "da": "UI WEB", "a": "API SERVER", "messaggio": "1.1: MostraElencoMacchinette()" },
+        { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "1.1.1: MostraElencoMacchinette()" },
+        { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "1.1.1.1: elenco tutte macchinette", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "utente clicca per uscire", "passi": [] },
+          { "guardia": "utente clicca su una macchinetta specifica", "passi": [
+            { "sd": "controllo_stato_macchinette" },
+            { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "2: utente clicca per uscire" }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 43,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Controllo_stato_macchinetta",
+      "partecipanti": ["Utente amministrativo", "UI WEB", "API SERVER", "DBMS My SQL"],
+      "interazioni": [
+        { "da": "Utente amministrativo", "a": "UI WEB", "messaggio": "1: utente clicca sul una specifica macchinetta" },
+        { "da": "UI WEB", "a": "API SERVER", "messaggio": "1.1: MostraElencoMacchinetteScuola()" },
+        { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "1.1.1: MostraElencoMacchinette()" },
+        { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "1.1.1.1: elenco macchinette", "tipo": "risposta" },
+        { "alt": [
+          { "guardia": "utente clicca per uscire", "passi": [] },
+          { "guardia": "utente clicca su una macchinetta con flag guasto", "passi": [
+            { "da": "UI WEB", "a": "API SERVER", "messaggio": "1.1.1.1: MostraStatoMacchinetta()" },
+            { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "1.1.1.1.1: MostraStatoMacchinetta()" },
+            { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "1.1.1.1.1.1: stato della macchinetta", "tipo": "risposta" },
+            { "da": "Utente amministrativo", "a": "VOID", "messaggio": "2: inviaTecnico" },
+            { "da": "VOID", "a": "UI WEB", "messaggio": "3: tecnico inviato con successo" }
+          ]}
+        ]}
+      ]
+    },
+
+    {
+      "pagina": 44,
+      "tipo": "sequence_diagram",
+      "titolo": "Sequenza Tecnico – Completamento richiesta",
+      "partecipanti": ["Tecnico", "UI WEB", "API SERVER", "DBMS My SQL", "Cassa", "Erogatore", "UI Macchinetta", "Assistenza"],
+      "interazioni": [
+        { "da": "Tecnico", "a": "UI WEB", "messaggio": "1: tecnico accede alle richieste di invio tecnico" },
+        { "da": "UI WEB", "a": "API SERVER", "messaggio": "1.1: richiesta" },
+        { "da": "UI WEB", "a": "UI WEB", "messaggio": "1.1.1: MostraReport()" },
+        { "alt": [
+          { "guardia": "il tecnico ignora la richiesta", "passi": [] },
+          { "guardia": "flag guasto generico", "passi": [
+            { "da": "Tecnico", "a": "UI Macchinetta", "messaggio": "2: LavoroSullaMacchinetta()" }
+          ]},
+          { "guardia": "flag zucchero in esaurimento", "passi": [
+            { "da": "Tecnico", "a": "Erogatore", "messaggio": "3: AggiungiZucchero()" }
+          ]},
+          { "guardia": "flag cialde in esaurimento", "passi": [
+            { "da": "Tecnico", "a": "Erogatore", "messaggio": "4: RiempiCialde()" }
+          ]},
+          { "guardia": "flag cassa piena", "passi": [
+            { "da": "Tecnico", "a": "Cassa", "messaggio": "5: SvuotaCassa()" }
+          ]},
+          { "guardia": "flag bicchierini in esaurimento", "passi": [
+            { "da": "Tecnico", "a": "Erogatore", "messaggio": "6: RiempiBicchierini()" }
+          ]}
+        ]},
+        { "da": "Assistenza", "a": "UI WEB", "messaggio": "7: guasto risolto", "tipo": "risposta" },
+        { "da": "Tecnico", "a": "UI WEB", "messaggio": "8: tecnico clicca elimina Richiesta" },
+        { "da": "UI WEB", "a": "API SERVER", "messaggio": "8.1: eliminaRichiesta" },
+        { "da": "API SERVER", "a": "DBMS My SQL", "messaggio": "8.1.1: eliminaRichiesta" },
+        { "da": "DBMS My SQL", "a": "UI WEB", "messaggio": "8.1.1.1: result", "tipo": "risposta" }
+      ]
+    },
+
+    {
+      "pagina": 45,
+      "tipo": "screenshot_ide",
+      "titolo": "IntelliJ IDEA – Run/Debug Configurations (overview)",
+      "configurazioni": {
+        "Application": {
+          "Creazione DBLocali": ["DBLocalCreator 2", "DBLocalCreator 1"],
+          "Macchinetta1": ["Assistenza 1", "Cassa 1", "Erogatore 1", "UI 1 (guasto assistenza)", "UI 1 (guasto UI)"],
+          "Macchinetta2": []
+        },
+        "Compound": [
+          "Macchinetta1_guastoUI",
+          "Macchinetta1_guastoAssistenza",
+          "Macchinetta2_guastoUI",
+          "Macchinetta2_guastoAssistenza"
+        ],
+        "JUnit": [],
+        "compound_selezionato": {
+          "nome": "Macchinetta1_guastoUI",
+          "applicazioni": [
+            "Application 'Assistenza 1'",
+            "Application 'Cassa 1'",
+            "Application 'Erogatore 1'",
+            "Application 'UI 1 (guasto UI)'"
+          ]
+        }
+      }
+    },
+
+    {
+      "pagina": 46,
+      "tipo": "screenshot_ide",
+      "titolo": "IntelliJ IDEA – Run/Debug Configuration dettaglio UI 1 (guasto UI)",
+      "configurazione_selezionata": {
+        "nome": "UI 1 (guasto UI)",
+        "build_and_run": {
+          "sdk": "java 22 SDK of 'MacchinettaMQTTSubscriber' module",
+          "main_class": "microservizi.Interfacciautente",
+          "program_arguments": "1 120 interfaccia_utente"
+        },
+        "working_directory": "2\\progetto-reti-2\\Eclipse\\macchinettaPISSIR",
+        "environment_variables": ""
+      }
+    },
+
+    {
+      "pagina": 47,
+      "tipo": "screenshot_ui",
+      "titolo": "Screenshot UI Macchinetta – Interfaccia utente reale",
+      "titolo_finestra": "Macchinetta",
+      "sezioni": [
+        {
+          "nome": "Lista bevande",
+          "contenuto": [
+            "1: Caffe",
+            "2: Latte caldo",
+            "3: The",
+            "4: Mocaccino",
+            "5: Caffe macchiato",
+            "6: Cioccolata fondente",
+            "7: Cioccolata al latte"
+          ]
+        },
+        {
+          "nome": "Info prezzo e credito",
+          "campi": ["Prezzo bevanda: —", "Importo inserito: —"]
+        },
+        { "nome": "Zucchero", "valore_attuale": "0/3" },
+        {
+          "nome": "Input bevanda",
+          "testo": "Inserisci il numero della bevanda desiderata:"
+        },
+        { "nome": "Bottone Inserisci" },
+        { "nome": "Restituzione monete", "tipo": "bottone_rosso" },
+        { "nome": "Output bevanda erogata", "valore": "Nothing to retrieve" },
+        { "nome": "Monete restituite", "valore": "Nothing to retrieve" },
+        {
+          "nome": "Tastiera numerica",
+          "tasti": ["1","2","3","4","5","6","7","8","9","+","0","-","Canc","Enter"]
+        }
+      ]
+    },
+
+    {
+      "pagina": 48,
+      "tipo": "pagina_vuota",
+      "titolo": "Pagina bianca",
+      "contenuto": null
+    },
+
+    {
+      "pagina": 49,
+      "tipo": "screenshot_ui",
+      "titolo": "Screenshot UI Macchinetta – Sezione Zucchero (zoom)",
+      "componente": "Zucchero",
+      "stato": "loading / dati non ancora disponibili (tre trattini)"
+    }
+
+  ]
+}

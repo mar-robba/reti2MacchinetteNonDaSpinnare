@@ -1,0 +1,102 @@
+@page
+@model PissirWebApp.Pages.CompletamentoRichiestaModel
+@{
+    ViewData["Title"] = "Completamento Richiesta";
+}
+
+<div class="card">
+    <h2>🔧 Richieste Tecnico</h2>
+    <p>Elenco delle richieste di manutenzione aperte. Seleziona un'azione per risolvere il guasto.</p>
+
+    @if (!string.IsNullOrEmpty(Model.Messaggio))
+    {
+        <div class="alert alert-success">@Model.Messaggio</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Errore))
+    {
+        <div class="alert alert-error">@Model.Errore</div>
+    }
+
+    @if (Model.Richieste != null && Model.Richieste.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Macchinetta</th><th>Scuola</th><th>Tipo Guasto</th><th>Stato</th><th>Data</th><th>Azioni</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.Richieste)
+                {
+                    <tr>
+                        <td>@r.Id</td>
+                        <td>@r.NomeMacchinetta</td>
+                        <td>@r.NomeScuola</td>
+                        <td>
+                            @if (r.TipoGuasto.Contains("CASSA_PIENA")) { <span class="badge badge-warning">💰 Cassa piena</span> }
+                            @if (r.TipoGuasto.Contains("CIALDE")) { <span class="badge badge-warning">☕ Cialde</span> }
+                            @if (r.TipoGuasto.Contains("ZUCCHERO")) { <span class="badge badge-warning">🧂 Zucchero</span> }
+                            @if (r.TipoGuasto.Contains("BICCHIERI")) { <span class="badge badge-warning">🥤 Bicchieri</span> }
+                            @if (r.TipoGuasto.Contains("GUASTO_GENERICO")) { <span class="badge badge-danger">⚠️ Guasto generico</span> }
+                        </td>
+                        <td><span class="badge @(r.Stato == "APERTA" ? "badge-danger" : "badge-warning")">@r.Stato</span></td>
+                        <td>@r.DataApertura</td>
+                        <td>
+                            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                @if (r.TipoGuasto.Contains("CASSA_PIENA"))
+                                {
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                        <input type="hidden" name="Azione" value="SVUOTA_CASSA" />
+                                        <button type="submit" class="btn btn-success">💰 Svuota Cassa</button>
+                                    </form>
+                                }
+                                @if (r.TipoGuasto.Contains("CIALDE"))
+                                {
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                        <input type="hidden" name="Azione" value="RIEMPI_CIALDE" />
+                                        <button type="submit" class="btn btn-success">☕ Riempi Cialde</button>
+                                    </form>
+                                }
+                                @if (r.TipoGuasto.Contains("ZUCCHERO"))
+                                {
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                        <input type="hidden" name="Azione" value="AGGIUNGI_ZUCCHERO" />
+                                        <button type="submit" class="btn btn-success">🧂 Aggiungi Zucchero</button>
+                                    </form>
+                                }
+                                @if (r.TipoGuasto.Contains("BICCHIERI"))
+                                {
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                        <input type="hidden" name="Azione" value="RIEMPI_BICCHIERINI" />
+                                        <button type="submit" class="btn btn-success">🥤 Riempi Bicchierini</button>
+                                    </form>
+                                }
+                                @if (r.TipoGuasto.Contains("GUASTO_GENERICO"))
+                                {
+                                    <form method="post" style="display:inline">
+                                        <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                        <input type="hidden" name="Azione" value="AGGIUSTA_MACCHINETTA" />
+                                        <button type="submit" class="btn btn-warning">🔧 Aggiusta Macchinetta</button>
+                                    </form>
+                                }
+                                <form method="post" style="display:inline" onsubmit="return confirm('Confermi di aver risolto il guasto?')">
+                                    <input type="hidden" name="IdRichiesta" value="@r.Id" />
+                                    <input type="hidden" name="Azione" value="ELIMINA_RICHIESTA" />
+                                    <button type="submit" class="btn btn-danger">🗑️ Elimina Richiesta</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-success">✅ Nessuna richiesta di manutenzione aperta. Tutto funziona correttamente!</div>
+    }
+
+    <br /><a href="/" class="btn btn-primary">← Torna alla home</a>
+</div>

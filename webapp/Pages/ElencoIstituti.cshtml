@@ -1,0 +1,38 @@
+@page
+@model PissirWebApp.Pages.ElencoIstitutiModel
+@{
+    ViewData["Title"] = "Elenco Istituti";
+}
+
+<div class="card">
+    <h2>🏛️ Elenco Istituti</h2>
+
+    @if (Model.Scuole != null && Model.Scuole.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nome</th><th>Indirizzo</th><th>Città</th><th>Azione</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model.Scuole)
+                {
+                    <tr>
+                        <td>@s.Id</td>
+                        <td>@s.Nome</td>
+                        <td>@s.Indirizzo</td>
+                        <td>@s.Citta</td>
+                        <td>
+                            <a href="/ElencoMacchinette?idScuola=@s.Id" class="btn btn-primary">Vedi Macchinette</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">Nessun istituto trovato.</div>
+    }
+
+    <br /><a href="javascript:history.back()" class="btn btn-primary">← Indietro</a>
+</div>

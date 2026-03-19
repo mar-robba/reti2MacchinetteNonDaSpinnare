@@ -1,0 +1,14 @@
+microservizi/assistenza/Assistenza.class
+microservizi/mqtt/MQTTConfig.class
+microservizi/interfacciautente/InterfacciaUtenteGUI.class
+microservizi/erogatore/ErogatoreAttesa.class
+microservizi/mqtt/MQTTSubscriber$1.class
+microservizi/cassa/Cassa.class
+microservizi/cassa/CassaMain.class
+microservizi/mqtt/MQTTPublisher.class
+microservizi/mqtt/MQTTSubscriber.class
+microservizi/interfacciautente/Interfacciautente.class
+microservizi/erogatore/Erogatore.class
+microservizi/cassa/CassaAttesa.class
+microservizi/erogatore/ErogatoreMain.class
+microservizi/db/DBManagement.class
