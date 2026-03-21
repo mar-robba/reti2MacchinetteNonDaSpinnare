@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wTO48eUEV0s=",
+  "dgSpecHash": "nxLBvJS+7F0=",
   "success": true,
-  "projectFilePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+  "projectFilePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
   "expectedPackageFiles": [
     "/home/marco/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/8.0.0/microsoft.aspnetcore.authentication.openidconnect.8.0.0.nupkg.sha512",
     "/home/marco/.nuget/packages/microsoft.identitymodel.abstractions/7.0.3/microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",
@@ -18,9 +18,9 @@
       "code": "NU1902",
       "level": "Warning",
       "message": "Il pacchetto 'Microsoft.IdentityModel.JsonWebTokens' 7.0.3 presenta una vulnerabilità nota di gravità moderata, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
-      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
       "warningLevel": 1,
-      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
       "libraryId": "Microsoft.IdentityModel.JsonWebTokens",
       "targetGraphs": [
         "net10.0"
@@ -30,9 +30,9 @@
       "code": "NU1902",
       "level": "Warning",
       "message": "Il pacchetto 'System.IdentityModel.Tokens.Jwt' 7.0.3 presenta una vulnerabilità nota di gravità moderata, https://github.com/advisories/GHSA-59j7-ghrg-fj52",
-      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
       "warningLevel": 1,
-      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+      "filePath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
       "libraryId": "System.IdentityModel.Tokens.Jwt",
       "targetGraphs": [
         "net10.0"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj": {}
+    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj": {}
   },
   "projects": {
-    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj": {
+    "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+        "projectUniqueName": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
         "projectName": "webapp",
-        "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/webapp.csproj",
+        "projectPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/webapp.csproj",
         "packagesPath": "/home/marco/.nuget/packages/",
-        "outputPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/prove/ProvaConJson/webapp/obj/",
+        "outputPath": "/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/marco/.nuget/NuGet/NuGet.Config"

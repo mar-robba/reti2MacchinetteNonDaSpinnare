@@ -68,6 +68,8 @@ server/macchinetta/{id}/guastoRisolto
 
 **Motivazione**: gli schemi mostrano i flussi di comunicazione tra microservizi (pagg.5, 14-18) ma non definiscono i nomi dei topic MQTT. La convenzione gerarchica `componente/id/sottocomponente/azione` permette il routing efficiente e l'uso di wildcard per il ServerREST (`server/macchinetta/+/guasto`).
 
+M: studia li whild card per vedere se la logica si può organizzare in un modo più intelligente
+
 ---
 
 ## 6. Database SQLite: schema single-table
@@ -79,6 +81,7 @@ server/macchinetta/{id}/guastoRisolto
 ---
 
 ## 7. Mapping bevande → cialde nel Erogatore
+M: probabilmente il progettista pensava ad una struttura più semplice fatta a cialde per ogni bevanda e non a tank combinabili, qua ha fatto un po un pasticcio.
 
 **Scelta**: `aggiornaCialde()` include logica per bevande composite:
 - **Mocaccino** (bevanda 4) → decrementa sia `cioccolata` che `caffe`
@@ -90,7 +93,7 @@ server/macchinetta/{id}/guastoRisolto
 ---
 
 ## 8. Soglie di esaurimento (Erogatore)
-
+M: l'hard coded non è mai un'ottima pratica si potrebbe cambiare, dunque aggiungere un'iterfaccia per l'amministrazione. oppure è hardcoded per le limitazioni hardware
 **Scelta**: soglie hardcoded in `Erogatore.java`:
 - Cialde: ≤ 5 unità → segnalazione
 - Zucchero: ≤ 10 unità → segnalazione

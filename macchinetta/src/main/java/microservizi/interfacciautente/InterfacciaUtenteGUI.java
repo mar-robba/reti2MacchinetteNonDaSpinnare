@@ -169,7 +169,7 @@ public class InterfacciaUtenteGUI extends JFrame {
                 case "-" -> onCambiaZucchero(-1);
                 case "Canc" -> onCancel();
                 case "Enter" -> onEnter();
-                case "€" -> {} // placeholder per inserimento monete fisiche
+                case "€" -> {} // tasto relativo a nessun uso ma presente nell'hardwar a disposizione
                 default -> {
                     // Numeri: appendi al campo input
                     inputBevanda.setText(inputBevanda.getText() + tasto);

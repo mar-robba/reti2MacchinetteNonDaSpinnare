@@ -6,9 +6,7 @@ import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.*;
-import java.util.stream.Collectors;
-
+import java.sql.*; import java.util.stream.Collectors;
 /**
  * Gestione del database SQLite locale della macchinetta.
  * Come da diagramma delle classi pagina 7.
@@ -38,11 +36,13 @@ public class DBManagement {
             InputStream is = getClass().getClassLoader().getResourceAsStream("init_db.sql");
             if (is != null) {
                 String sql = new BufferedReader(new InputStreamReader(is))
-                        .lines().collect(Collectors.joining("\n"));
+                        .lines()
+                        .filter(line -> !line.trim().startsWith("--"))
+                        .collect(Collectors.joining("\n"));
                 // Esegui ogni statement separatamente
                 for (String statement : sql.split(";")) {
                     String trimmed = statement.trim();
-                    if (!trimmed.isEmpty() && !trimmed.startsWith("--")) {
+                    if (!trimmed.isEmpty()) {
                         try (Statement stmt = conn.createStatement()) {
                             stmt.execute(trimmed);
                         }
@@ -60,9 +60,17 @@ public class DBManagement {
      * Restituisce una connessione al database SQLite.
      */
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(dbPath);
+        return DriverManager.getConnection(dbPath); //import java.sql.*;
+        /*
+        A cosa serve nello specifico?
+Ecco come funziona il "dietro le quinte" quando scrivi DriverManager.getConnection(dbPath) nel tuo codice:
+    Il Riconoscimento: Tu gli passi una stringa come jdbc:sqlite:macchinetta_1.db.
+    La Selezione: DriverManager guarda l'inizio della stringa (jdbc:sqlite:). Capisce che stai parlando con SQLite e non con MySQL o Oracle.
+    La Connessione: Cerca tra le librerie del tuo progetto un "Driver" che sappia gestire SQLite. Se lo trova, gli chiede di creare una connessione (Connection) e te la consegna.
+        */
     }
 
+// ma che cazzo serve?
     /**
      * Legge l'intero database locale come JsonObject.
      *

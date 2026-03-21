@@ -1,0 +1,13 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mit.unibs.pissir:macchinetta[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding Macchinetta PISSIR 1.0-SNAPSHOT[m
+[[1;34mINFO[m]   from pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mexec:3.1.1:java[m [1m(default-cli)[m @ [36mmacchinetta[0;1m ---[m
+[MQTT-SUB] Sottoscritto a: macchinetta/1/assistenza/guasto
+[MQTT-SUB] Sottoscritto a: macchinetta/1/assistenza/risolto
+[MQTT-SUB] Sottoscritto a: server/macchinetta/1/tecnicoInviato
+[Assistenza] 3 subscriber attivi per macchinetta 1
+[Assistenza] Microservizio avviato per macchinetta 1

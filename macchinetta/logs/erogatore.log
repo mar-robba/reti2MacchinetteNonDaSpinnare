@@ -1,0 +1,18 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mit.unibs.pissir:macchinetta[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding Macchinetta PISSIR 1.0-SNAPSHOT[m
+[[1;34mINFO[m]   from pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mexec:3.1.1:java[m [1m(default-cli)[m @ [36mmacchinetta[0;1m ---[m
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+[DB] Database inizializzato: jdbc:sqlite:macchinetta_1.db
+[Erogatore] Inizializzato per macchinetta 1 | Cialde: {caffe=50, latte=50, the=50, cioccolata=50, zucchero=100, bicchieri=100}
+[ErogatoreAttesa] Avvio subscriber su radix: macchinetta/1/erogatore/
+[MQTT-SUB] Sottoscritto a: macchinetta/1/erogatore/eroga
+[MQTT-SUB] Sottoscritto a: macchinetta/1/erogatore/setZucchero
+[ErogatoreAttesa] 2 subscriber attivi.
+[ErogatoreMain] Microservizio Erogatore avviato per macchinetta 1

@@ -1,0 +1,40 @@
+-------------------------------------------------------------------------------
+Test set: microservizi.erogatore.ErogatoreTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.450 s <<< FAILURE! -- in microservizi.erogatore.ErogatoreTest
+microservizi.erogatore.ErogatoreTest.testBugEsaurimentoIngredienteSecondarioMocaccino -- Time elapsed: 0.051 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Il Mocaccino NON deve essere disponibile se manca il caffè! ==> expected: <false> but was: <true>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:36)
+	at org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:239)
+	at microservizi.erogatore.ErogatoreTest.testBugEsaurimentoIngredienteSecondarioMocaccino(ErogatoreTest.java:79)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+microservizi.erogatore.ErogatoreTest.testBugErogazioneConZuccheroInsufficiente -- Time elapsed: 0.046 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Lo zucchero non deve scendere in negativo ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at microservizi.erogatore.ErogatoreTest.testBugErogazioneConZuccheroInsufficiente(ErogatoreTest.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+microservizi.erogatore.ErogatoreTest.testBugEsaurimentoIngredienteSecondarioMacchiato -- Time elapsed: 0.044 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Il Caffè macchiato NON deve essere disponibile se manca il latte! ==> expected: <false> but was: <true>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertFalse.failNotFalse(AssertFalse.java:63)
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:36)
+	at org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:239)
+	at microservizi.erogatore.ErogatoreTest.testBugEsaurimentoIngredienteSecondarioMacchiato(ErogatoreTest.java:89)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

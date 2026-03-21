@@ -193,6 +193,8 @@ public class Interfacciautente {
      * Entry point del microservizio InterfacciaUtente.
      * Argomenti: idMacchinetta mqttPassword [devOrTest]
      */
+    // Java sintax reminder: il metodo main può costruire l'oggette della crasse che lo contiene perchè è un metodo statico
+    // Chiamare il main da un'altra classe non crea un nuovo processo che esegue questa parte di codice 
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Uso: Interfacciautente <idMacchinetta> <mqttPassword> [dev|test]");
