@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: microservizi.interfacciautente.InterfacciautenteTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.331 s <<< FAILURE! -- in microservizi.interfacciautente.InterfacciautenteTest
-microservizi.interfacciautente.InterfacciautenteTest.testBugSceltaRispostaEccezioniNonGestite -- Time elapsed: 0.033 s <<< FAILURE!
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.283 s <<< FAILURE! -- in microservizi.interfacciautente.InterfacciautenteTest
+microservizi.interfacciautente.InterfacciautenteTest.testBugSceltaRispostaEccezioniNonGestite -- Time elapsed: 0.034 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: L'errore parsing del MQTT deve essere gestito e non lanciare eccezioni verso il chiamante ==> Unexpected exception thrown: java.lang.NumberFormatException: For input string: "non_un_numero"
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
@@ -17,7 +17,7 @@ Caused by: java.lang.NumberFormatException: For input string: "non_un_numero"
 	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
 	at java.base/jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
 	at java.base/java.lang.Double.parseDouble(Double.java:792)
-	at microservizi.interfacciautente.Interfacciautente.sceltaRisposta(Interfacciautente.java:76)
+	at microservizi.interfacciautente.Interfacciautente.sceltaRisposta(Interfacciautente.java:181)
 	at microservizi.interfacciautente.InterfacciautenteTest.lambda$testBugSceltaRispostaEccezioniNonGestite$1(InterfacciautenteTest.java:94)
 	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:49)
 	... 6 more

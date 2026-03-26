@@ -168,8 +168,8 @@ public class InterfacciaUtenteGUI extends JFrame {
                 case "+" -> onCambiaZucchero(1);
                 case "-" -> onCambiaZucchero(-1);
                 case "Canc" -> onCancel();
-                case "Enter" -> onEnter();
-                case "€" -> {} // tasto relativo a nessun uso ma presente nell'hardwar a disposizione
+                case "Enter" -> onEnter(); // attiva e usa quello in inputBevanda
+                case "€" -> {} // placeholder per inserimento monete fisiche
                 default -> {
                     // Numeri: appendi al campo input
                     inputBevanda.setText(inputBevanda.getText() + tasto);
@@ -179,8 +179,8 @@ public class InterfacciaUtenteGUI extends JFrame {
     }
 
     // === Azioni utente ===
-
-    private void onSelezionaBevanda() {
+    // prende i numeri immagazzinati in inputBevanda e passa tale numero di bevanda alla logiga dell'Interfaccia.java
+    private void onSelezionaBevanda() {// è presente un listener all'inizio del file, un bottone
         try {
             int num = Integer.parseInt(inputBevanda.getText().trim());
             bevandaSelezionata = num;
@@ -202,6 +202,9 @@ public class InterfacciaUtenteGUI extends JFrame {
     }
 
     private void onCambiaZucchero(int delta) {
+        // ! todo: manca il controllo se ci sono abbastanza chalde di zucchero del database 
+        // se non ci sono si stampo che non se ne possono aggiugere più di quante ce ne sono presenti nello stoccaggio
+        
         int nuovo = livelloZucchero + delta;
         if (nuovo < 0) {
             mostraMessaggio("Non puoi togliere altro zucchero");
@@ -211,6 +214,14 @@ public class InterfacciaUtenteGUI extends JFrame {
             mostraMessaggio("Non puoi aggiungere altro zucchero");
             return;
         }
+       
+        //differentemente dal diagramma di sequesza dato come specifica si è deciso di intermediare la query all'interfaccia
+        int zuccheroDisponibile = logica.getZuccheroDisponibile();
+        if (nuovo > zuccheroDisponibile) {
+            mostraMessaggio("Non se ne possono aggiungere più di quante ce ne sono presenti nello stoccaggio");
+            return;
+        }
+        
         livelloZucchero = nuovo;
         labelZucchero.setText("Zucchero: " + livelloZucchero + "/" + MAX_ZUCCHERO);
     }

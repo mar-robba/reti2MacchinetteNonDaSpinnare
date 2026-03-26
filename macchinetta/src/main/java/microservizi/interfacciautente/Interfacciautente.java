@@ -33,7 +33,7 @@ public class Interfacciautente {
      * @param devOrTest     "dev" o "test"
      */
     public Interfacciautente(int idMacchinetta, String password, String devOrTest) {
-        this.idMacchinetta = idMacchinetta;
+        this.idMacchinetta = idMacchinetta; // passato dagli argomenti del mai una volta che si runna
         this.mqttUsername = "macchinetta" + idMacchinetta;
         this.mqttPassword = password;
         this.topicRadix = "macchinetta/" + idMacchinetta + "/";
@@ -42,10 +42,115 @@ public class Interfacciautente {
         this.db = new DBManagement(devOrTest, idMacchinetta);
     }
 
-    public String getTopicRadix() { return topicRadix; }
+
+    // ==================================== SET METODS ==========================================
+    public void setGui(InterfacciaUtenteGUI gui) { this.gui = gui; }
+
+    // ==================================== END SET METODS ==========================================
+
+    // ==================================== GET METODS ==========================================
+    // spesso subordinate alle sucessive
+    // spesso query al database
+                                            // radice
+    public String getTopicRadix() { return topicRadix; }// non usato perche si usa l'incapsulamento (quell'uso è perchè viene usato da un test)
+
     public ArrayList<MQTTSubscriber> getListaSubscribers() { return listaSubscriber; }
 
-    public void setGui(InterfacciaUtenteGUI gui) { this.gui = gui; }
+    /**
+     * Restituisce l'elenco delle bevande disponibili dal DB locale.
+     * STM pag.9: MostraBevande – esclude quelle non disponibili.
+     */
+    protected List<String> getBevande() {
+        List<String> bevande = new ArrayList<>();
+        try (Connection conn = db.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT id, nome, prezzo FROM bevande WHERE disponibile = 1")) {
+            while (rs.next()) {
+                bevande.add(rs.getInt("id") + ": " + rs.getString("nome"));
+            }
+        } catch (SQLException e) {
+            System.err.println("[InterfacciaUtente] Errore lettura bevande: " + e.getMessage());
+        }
+        return bevande;
+    }
+
+    /**
+     * Legge il prezzo di una bevanda dal DB.
+     */
+    public double getPrezzoBevanda(int numeroBevanda) {
+        try (Connection conn = db.getConnection();
+             PreparedStatement ps = conn.prepareStatement(
+                     "SELECT prezzo FROM bevande WHERE id = ? AND disponibile = 1")) {
+            ps.setInt(1, numeroBevanda);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble("prezzo");
+            }
+        } catch (SQLException e) {
+            System.err.println("[InterfacciaUtente] Errore: " + e.getMessage());
+        }
+        return -1;
+    }
+
+    /**
+     * Legge la quantità di zucchero disponibile dallo stoccaggio.
+     */
+    public int getZuccheroDisponibile() {
+        // per ogni get si apre una nuova connessione, non sarebbe meglio aprirla una sola volta
+        try (Connection conn = db.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT zucchero FROM cialde WHERE id = 1")) {
+            if (rs.next()) return rs.getInt("zucchero");
+        } catch (SQLException e) {
+            System.err.println("[InterfacciaUtente] Errore: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    // ====================================  END GET METODS  ==========================================
+
+
+    // ==================== Azioni invocate dalla GUI dunque anche azioni dell'utente =====================
+    // Spesso Operazioni MQTT
+    /**
+     * L'utente seleziona una bevanda.
+     */
+    public void selezionaBevanda(int numeroBevanda) {
+        double prezzo = getPrezzoBevanda(numeroBevanda);
+        if (prezzo >= 0 && gui != null) {
+            gui.mostraPrezzo(prezzo);
+        } else if (gui != null) {
+            gui.mostraErrore("Bevanda non disponibile");
+        }
+    }
+
+    /**
+     * L'utente inserisce una moneta.
+     */
+    public void inserisciMoneta(double importo) {
+
+        createPublisher(String.valueOf(importo), topicRadix + "cassa/monete");
+    }
+
+    /**
+     * L'utente chiede indietro le monete.
+     */
+    public void richiediMoneteIndietro() {
+        createPublisher("true", topicRadix + "cassa/ridaiSoldi");
+    }
+
+    /**
+     * L'utente conferma l'acquisto (preme Enter).
+     */
+    public void confermaAcquisto(int numeroBevanda, int zucchero) {
+        // Prima invia il livello zucchero all'erogatore
+        createPublisher(String.valueOf(zucchero), topicRadix + "erogatore/setZucchero");
+        // Poi invia il numero della bevanda alla cassa
+        createPublisher(String.valueOf(numeroBevanda), topicRadix + "cassa/numeroBevanda");
+    }
+
+    // ==================== END Azioni invocate dalla GUI dunque anche azioni dell'utente =====================
+
+    // =================================== MQTT SUPPORT ============================
 
     /**
      * Crea e registra un subscriber MQTT.
@@ -99,79 +204,6 @@ public class Interfacciautente {
     }
 
     /**
-     * Restituisce l'elenco delle bevande disponibili dal DB locale.
-     * STM pag.9: MostraBevande – esclude quelle non disponibili.
-     */
-    protected List<String> getBevande() {
-        List<String> bevande = new ArrayList<>();
-        try (Connection conn = db.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT id, nome, prezzo FROM bevande WHERE disponibile = 1")) {
-            while (rs.next()) {
-                bevande.add(rs.getInt("id") + ": " + rs.getString("nome"));
-            }
-        } catch (SQLException e) {
-            System.err.println("[InterfacciaUtente] Errore lettura bevande: " + e.getMessage());
-        }
-        return bevande;
-    }
-
-    /**
-     * Legge il prezzo di una bevanda dal DB.
-     */
-    public double getPrezzoBevanda(int numeroBevanda) {
-        try (Connection conn = db.getConnection();
-             PreparedStatement ps = conn.prepareStatement(
-                     "SELECT prezzo FROM bevande WHERE id = ? AND disponibile = 1")) {
-            ps.setInt(1, numeroBevanda);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return rs.getDouble("prezzo");
-            }
-        } catch (SQLException e) {
-            System.err.println("[InterfacciaUtente] Errore: " + e.getMessage());
-        }
-        return -1;
-    }
-
-    // === Azioni dell'utente (invocate dalla GUI) ===
-
-    /**
-     * L'utente seleziona una bevanda.
-     */
-    public void selezionaBevanda(int numeroBevanda) {
-        double prezzo = getPrezzoBevanda(numeroBevanda);
-        if (prezzo >= 0 && gui != null) {
-            gui.mostraPrezzo(prezzo);
-        } else if (gui != null) {
-            gui.mostraErrore("Bevanda non disponibile");
-        }
-    }
-
-    /**
-     * L'utente inserisce una moneta.
-     */
-    public void inserisciMoneta(double importo) {
-        createPublisher(String.valueOf(importo), topicRadix + "cassa/monete");
-    }
-
-    /**
-     * L'utente chiede indietro le monete.
-     */
-    public void richiediMoneteIndietro() {
-        createPublisher("true", topicRadix + "cassa/ridaiSoldi");
-    }
-
-    /**
-     * L'utente conferma l'acquisto (preme Enter).
-     */
-    public void confermaAcquisto(int numeroBevanda, int zucchero) {
-        // Prima invia il livello zucchero all'erogatore
-        createPublisher(String.valueOf(zucchero), topicRadix + "erogatore/setZucchero");
-        // Poi invia il numero della bevanda alla cassa
-        createPublisher(String.valueOf(numeroBevanda), topicRadix + "cassa/numeroBevanda");
-    }
-
-    /**
      * Avvia tutti i subscriber per ricevere risposte.
      */
     public void startListening() {
@@ -189,12 +221,23 @@ public class Interfacciautente {
         listaSubscriber.clear();
     }
 
+    // =================================== END MQTT SUPPORT ============================
+
+
+// ======================= MAIN ====================
+    // perche tale eettere il main nell'iterfaccia utente
+//Però la scelta attuale ha una giustificazione: Interfacciautente è il cuore del microservizio, la GUI 
+// è solo uno strato di presentazione intercambiabile. Mettendo il main nella logica si lascia aperta la
+//e porta a eseguire il microservizio in modalità headless (senza GUI, magari per test automatici o da terminale), 
+// semplicemente non creando la GUI. Con il main nella GUI invece, avviare il microservizio senza interfaccia grafica 
+// richiederebbe comunque di passare dalla classe GUI._
     /**
      * Entry point del microservizio InterfacciaUtente.
      * Argomenti: idMacchinetta mqttPassword [devOrTest]
      */
     // Java sintax reminder: il metodo main può costruire l'oggette della crasse che lo contiene perchè è un metodo statico
-    // Chiamare il main da un'altra classe non crea un nuovo processo che esegue questa parte di codice 
+    // Chiamare il main da un'altra classe non crea un nuovo processo che esegue questa parte di codice ma soltanto esegue il codice  nel processo già esistente 
+
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Uso: Interfacciautente <idMacchinetta> <mqttPassword> [dev|test]");
@@ -206,6 +249,7 @@ public class Interfacciautente {
         String mode = args.length > 2 ? args[2] : "dev";
 
         Interfacciautente interfaccia = new Interfacciautente(idMacchinetta, mqttPassword, mode);
+        // avvia gli ascoltatori i subscriber dei topic : sezioni MQTT SUPPORTO
         interfaccia.startListening();
 
         // Crea e mostra la GUI

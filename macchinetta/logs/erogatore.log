@@ -10,9 +10,13 @@ SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
 [DB] Database inizializzato: jdbc:sqlite:macchinetta_1.db
-[Erogatore] Inizializzato per macchinetta 1 | Cialde: {caffe=50, latte=50, the=50, cioccolata=50, zucchero=100, bicchieri=100}
+[Erogatore] Inizializzato per macchinetta 1 | Cialde: {caffe=48, latte=49, the=49, cioccolata=48, zucchero=97, bicchieri=96}
 [ErogatoreAttesa] Avvio subscriber su radix: macchinetta/1/erogatore/
 [MQTT-SUB] Sottoscritto a: macchinetta/1/erogatore/eroga
 [MQTT-SUB] Sottoscritto a: macchinetta/1/erogatore/setZucchero
 [ErogatoreAttesa] 2 subscriber attivi.
 [ErogatoreMain] Microservizio Erogatore avviato per macchinetta 1
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa

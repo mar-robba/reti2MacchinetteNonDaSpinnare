@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="microservizi.interfacciautente.InterfacciautenteTest" time="0.331" tests="8" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="microservizi.interfacciautente.InterfacciautenteTest" time="0.283" tests="8" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="IT"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260321200853960_3.jar /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire 2026-03-21T20-08-53_901-jvmRun1 surefire-20260321200853960_1tmp surefire_0-20260321200853960_2tmp"/>
+    <property name="sun.java.command" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260322010348045_3.jar /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire 2026-03-22T01-03-47_980-jvmRun1 surefire-20260322010348045_1tmp surefire_0-20260322010348045_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/test-classes:/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/classes:/home/marco/.m2/repository/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.5/org.eclipse.paho.client.mqttv3-1.2.5.jar:/home/marco/.m2/repository/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar:/home/marco/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/marco/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/home/marco/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/home/marco/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260321200853960_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260322010348045_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.10+7-Ubuntu-125.10"/>
     <property name="user.name" value="marco"/>
@@ -54,40 +54,40 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testTopicSconosciuto" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.095">
+  <testcase name="testTopicSconosciuto" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.036">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 [InterfacciaUtente] Ricevuto: topic/sconosciuto → 123
 [InterfacciaUtente] Topic non gestito: topic/sconosciuto
 ]]></system-out>
   </testcase>
-  <testcase name="testGetPrezzoBevandaEsistente" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.031">
+  <testcase name="testGetPrezzoBevandaEsistente" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.032">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 ]]></system-out>
   </testcase>
-  <testcase name="testGetPrezzoBevandaNonDisponibile" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.036">
+  <testcase name="testGetPrezzoBevandaNonDisponibile" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.037">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 ]]></system-out>
   </testcase>
-  <testcase name="testSelezionaBevandaInesistente" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.031">
+  <testcase name="testSelezionaBevandaInesistente" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.033">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 ]]></system-out>
   </testcase>
-  <testcase name="testInizializzazioneParametri" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.03">
+  <testcase name="testInizializzazioneParametri" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.031">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 ]]></system-out>
   </testcase>
-  <testcase name="testGetBevandeFiltroDisponibile" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.038">
+  <testcase name="testGetBevandeFiltroDisponibile" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.041">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 ]]></system-out>
   </testcase>
-  <testcase name="testPayloadMqttErratiMaStringa" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.031">
+  <testcase name="testPayloadMqttErratiMaStringa" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.033">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_996_test.db
 [InterfacciaUtente] Ricevuto: macchinetta/996/interfaccia/errore → testo di errore libero
 [InterfacciaUtente] Ricevuto: macchinetta/996/interfaccia/bevandaErogata → Caffè lungo
 [InterfacciaUtente] Ricevuto: macchinetta/996/interfaccia/espelliMoneta → 0.01
 ]]></system-out>
   </testcase>
-  <testcase name="testBugSceltaRispostaEccezioniNonGestite" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.033">
+  <testcase name="testBugSceltaRispostaEccezioniNonGestite" classname="microservizi.interfacciautente.InterfacciautenteTest" time="0.034">
     <failure message="L&apos;errore parsing del MQTT deve essere gestito e non lanciare eccezioni verso il chiamante ==&gt; Unexpected exception thrown: java.lang.NumberFormatException: For input string: &quot;non_un_numero&quot;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: L'errore parsing del MQTT deve essere gestito e non lanciare eccezioni verso il chiamante ==> Unexpected exception thrown: java.lang.NumberFormatException: For input string: "non_un_numero"
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
@@ -102,7 +102,7 @@ Caused by: java.lang.NumberFormatException: For input string: "non_un_numero"
 	at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2054)
 	at java.base/jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
 	at java.base/java.lang.Double.parseDouble(Double.java:792)
-	at microservizi.interfacciautente.Interfacciautente.sceltaRisposta(Interfacciautente.java:76)
+	at microservizi.interfacciautente.Interfacciautente.sceltaRisposta(Interfacciautente.java:181)
 	at microservizi.interfacciautente.InterfacciautenteTest.lambda$testBugSceltaRispostaEccezioniNonGestite$1(InterfacciautenteTest.java:94)
 	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:49)
 	... 6 more

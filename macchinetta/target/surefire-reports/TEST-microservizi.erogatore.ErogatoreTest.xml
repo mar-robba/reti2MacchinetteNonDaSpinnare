@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="microservizi.erogatore.ErogatoreTest" time="0.45" tests="9" errors="0" skipped="0" failures="3">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="microservizi.erogatore.ErogatoreTest" time="0.402" tests="9" errors="0" skipped="0" failures="3">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="IT"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-21-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260321200853960_3.jar /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire 2026-03-21T20-08-53_901-jvmRun1 surefire-20260321200853960_1tmp surefire_0-20260321200853960_2tmp"/>
+    <property name="sun.java.command" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260322010348045_3.jar /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire 2026-03-22T01-03-47_980-jvmRun1 surefire-20260322010348045_1tmp surefire_0-20260322010348045_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/test-classes:/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/classes:/home/marco/.m2/repository/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.5/org.eclipse.paho.client.mqttv3-1.2.5.jar:/home/marco/.m2/repository/org/xerial/sqlite-jdbc/3.45.1.0/sqlite-jdbc-3.45.1.0.jar:/home/marco/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/home/marco/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/home/marco/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/home/marco/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
-    <property name="surefire.real.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260321200853960_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/macchinetta/target/surefire/surefirebooter-20260322010348045_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.10+7-Ubuntu-125.10"/>
     <property name="user.name" value="marco"/>
@@ -54,14 +54,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testAggiornaCialdeBevandeComposte" classname="microservizi.erogatore.ErogatoreTest" time="0.047">
+  <testcase name="testAggiornaCialdeBevandeComposte" classname="microservizi.erogatore.ErogatoreTest" time="0.051">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_997_test.db
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 [Erogatore] Cialde aggiornate dopo bevanda 4: {caffe=99, latte=100, the=100, cioccolata=99, zucchero=100, bicchieri=99}
 [Erogatore] Cialde aggiornate dopo bevanda 5: {caffe=98, latte=99, the=100, cioccolata=99, zucchero=100, bicchieri=98}
 ]]></system-out>
   </testcase>
-  <testcase name="testBugEsaurimentoIngredienteSecondarioMocaccino" classname="microservizi.erogatore.ErogatoreTest" time="0.051">
+  <testcase name="testBugEsaurimentoIngredienteSecondarioMocaccino" classname="microservizi.erogatore.ErogatoreTest" time="0.044">
     <failure message="Il Mocaccino NON deve essere disponibile se manca il caffè! ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Il Mocaccino NON deve essere disponibile se manca il caffè! ==> expected: <false> but was: <true>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -83,7 +83,7 @@
 [Erogatore] Cialde aggiornate dopo bevanda 1: {caffe=99, latte=100, the=100, cioccolata=100, zucchero=98, bicchieri=99}
 ]]></system-out>
   </testcase>
-  <testcase name="testBugErogazioneConZuccheroInsufficiente" classname="microservizi.erogatore.ErogatoreTest" time="0.046">
+  <testcase name="testBugErogazioneConZuccheroInsufficiente" classname="microservizi.erogatore.ErogatoreTest" time="0.05">
     <failure message="Lo zucchero non deve scendere in negativo ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Lo zucchero non deve scendere in negativo ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -100,12 +100,12 @@
 [Erogatore] Cialde aggiornate dopo bevanda 1: {caffe=99, latte=100, the=100, cioccolata=100, zucchero=-4, bicchieri=99}
 ]]></system-out>
   </testcase>
-  <testcase name="testControlloCialdeMultipliAllarmi" classname="microservizi.erogatore.ErogatoreTest" time="0.1">
+  <testcase name="testControlloCialdeMultipliAllarmi" classname="microservizi.erogatore.ErogatoreTest" time="0.046">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_997_test.db
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 ]]></system-out>
   </testcase>
-  <testcase name="testBugEsaurimentoIngredienteSecondarioMacchiato" classname="microservizi.erogatore.ErogatoreTest" time="0.044">
+  <testcase name="testBugEsaurimentoIngredienteSecondarioMacchiato" classname="microservizi.erogatore.ErogatoreTest" time="0.043">
     <failure message="Il Caffè macchiato NON deve essere disponibile se manca il latte! ==&gt; expected: &lt;false&gt; but was: &lt;true&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: Il Caffè macchiato NON deve essere disponibile se manca il latte! ==> expected: <false> but was: <true>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -121,17 +121,17 @@
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 ]]></system-out>
   </testcase>
-  <testcase name="testInizializzazione" classname="microservizi.erogatore.ErogatoreTest" time="0.035">
+  <testcase name="testInizializzazione" classname="microservizi.erogatore.ErogatoreTest" time="0.041">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_997_test.db
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 ]]></system-out>
   </testcase>
-  <testcase name="testBevandaSingolaIngredienteDisponibile" classname="microservizi.erogatore.ErogatoreTest" time="0.036">
+  <testcase name="testBevandaSingolaIngredienteDisponibile" classname="microservizi.erogatore.ErogatoreTest" time="0.037">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_997_test.db
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 ]]></system-out>
   </testcase>
-  <testcase name="testEsaurimentoIngredientePrincipale" classname="microservizi.erogatore.ErogatoreTest" time="0.041">
+  <testcase name="testEsaurimentoIngredientePrincipale" classname="microservizi.erogatore.ErogatoreTest" time="0.042">
     <system-out><![CDATA[[DB] Database inizializzato: jdbc:sqlite:macchinetta_997_test.db
 [Erogatore] Inizializzato per macchinetta 997 | Cialde: {caffe=5, latte=5, the=5, cioccolata=5, zucchero=10, bicchieri=10}
 ]]></system-out>

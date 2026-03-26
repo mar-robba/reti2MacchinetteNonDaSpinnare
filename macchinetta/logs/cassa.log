@@ -18,3 +18,11 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 [MQTT-SUB] Sottoscritto a: macchinetta/1/cassa/zucchero
 [CassaAttesa] 4 subscriber attivi.
 [CassaMain] Microservizio Cassa avviato per macchinetta 1
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-SUB] Connessione persa: Connessione persa
