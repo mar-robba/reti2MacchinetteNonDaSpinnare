@@ -4,6 +4,10 @@ using PissirWebApp.Services;
 
 namespace PissirWebApp.Pages;
 
+/// <summary>
+/// Modello per visualizzare lo stato in dettaglio di una specifica macchinetta.
+/// Rileva cassa piena, cialde o bicchieri in esaurimento, guasti e permette l'invio tecnico.
+/// </summary>
 public class StatoMacchinettaModel : PageModel
 {
     private readonly ApiService _api;
@@ -16,11 +20,17 @@ public class StatoMacchinettaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Effettua il fetch dello stato attuale della macchinetta indicata dall'`id`.
+    /// </summary>
     public async Task OnGetAsync(int id)
     {
         await CaricaStato(id);
     }
 
+    /// <summary>
+    /// Richiesta POST: Avvia una procedura di richiesta intervento tecnico (es: ricarica o riparazione guasto).
+    /// </summary>
     public async Task<IActionResult> OnPostAsync(int idMacchinetta, string tipoGuasto)
     {
         var result = await _api.InviaTecnicoAsync(idMacchinetta, tipoGuasto);
@@ -41,6 +51,10 @@ public class StatoMacchinettaModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Helper: Legge i flag di stato della macchinetta dal JSON restituito dall'API convertendoli nel modello C#.
+    /// Calcola dinamicamente la natura del guasto/problema.
+    /// </summary>
     private async Task CaricaStato(int id)
     {
         var result = await _api.GetStatoMacchinettaAsync(id);

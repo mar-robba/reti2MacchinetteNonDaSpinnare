@@ -100,8 +100,8 @@ public class ErogatoreMain {
 
         int idMacchinetta = Integer.parseInt(args[0]);
         String mqttPassword = args[1];
-        String mode = args.length > 2 ? args[2] : "dev";
-
+        String mode = args.length > 2 ? args[2] : "dev"; // modelità di default
+                                                                                    // dev|test
         ErogatoreMain erogatoreMain = new ErogatoreMain(idMacchinetta, mqttPassword, mode);
         erogatoreMain.start();
     }

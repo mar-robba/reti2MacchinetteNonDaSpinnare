@@ -23,11 +23,18 @@ public class AggiungiMacchinettaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Carica le scuole disponibili nel sistema da mostrare nel form.
+    /// </summary>
     public async Task OnGetAsync()
     {
         await CaricaScuole();
     }
 
+    /// <summary>
+    /// Richiesta POST: Tenta di aggiungere una nuova macchinetta alla scuola selezionata.
+    /// Valida i campi, in caso di successo notifica l'utente.
+    /// </summary>
     public async Task<IActionResult> OnPostAsync()
     {
         if (string.IsNullOrWhiteSpace(Nome) || IdScuola <= 0)
@@ -61,6 +68,9 @@ public class AggiungiMacchinettaModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Metodo helper per caricare l'elenco delle scuole dall'API e popolare la tendina di selezione.
+    /// </summary>
     private async Task CaricaScuole()
     {
         var result = await _api.GetScuoleAsync();

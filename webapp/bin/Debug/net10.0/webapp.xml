@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>webapp</name>
+    </assembly>
+    <members>
+        <member name="T:PissirWebApp.Pages.AggiungiMacchinettaModel">
+            <summary>
+            Aggiungi Macchinetta – STM pag.21, Sequenza pag.37.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.AggiungiMacchinettaModel.OnGetAsync">
+            <summary>
+            Richiesta GET: Carica le scuole disponibili nel sistema da mostrare nel form.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.AggiungiMacchinettaModel.OnPostAsync">
+            <summary>
+            Richiesta POST: Tenta di aggiungere una nuova macchinetta alla scuola selezionata.
+            Valida i campi, in caso di successo notifica l'utente.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.AggiungiMacchinettaModel.CaricaScuole">
+            <summary>
+            Metodo helper per caricare l'elenco delle scuole dall'API e popolare la tendina di selezione.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.AggiungiScuolaModel">
+            <summary>
+            Aggiungi Scuola – STM pag.20, Sequenza pag.36.
+            Mostra form → Controlla elenco scuole → Aggiungi oppure MostraErrore.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.AggiungiScuolaModel.OnGet">
+            <summary>
+            Richiesta GET: Mostra semplicemente la pagina con il form vuoto.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.AggiungiScuolaModel.OnPostAsync">
+            <summary>
+            Richiesta POST: Valida il nome della scuola e la aggiunge tramite API.
+            In caso di successo mostra un messaggio, in caso di errore i dettagli dell'errore.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.CompletamentoRichiestaModel">
+            <summary>
+            Completamento Richiesta – STM pag.29-34, Sequenza pag.44.
+            Il tecnico vede le richieste aperte, esegue l'azione e chiude la richiesta.
+            Azioni: SvuotaCassa, RiempiCialde, RiempiBicchierini, AggiungiZucchero, AggiustaMacchinetta.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.CompletamentoRichiestaModel.OnGetAsync">
+            <summary>
+            Richiesta GET: Carica l'elenco di tutte le richieste pendenti o in corso.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.CompletamentoRichiestaModel.OnPostAsync(System.Int32,System.String)">
+            <summary>
+            Richiesta POST: Esegue l'intervento tecnico o chiude la richiesta.
+            Simula il successo dell'azione locale o effettua la chiamata API per completare/eliminare la richiesta.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.CompletamentoRichiestaModel.CaricaRichieste">
+            <summary>
+            Helper per recuperare dal Server REST tutte le richieste per il team tecnico.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.ElencoIstitutiModel">
+            <summary>
+            Modello per la pagina che mostra l'elenco di tutte le scuole registrate.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.ElencoIstitutiModel.OnGetAsync">
+            <summary>
+            Richiesta GET: Effettua una chiamata all'API per recuperare e mostrare le scuole.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.ElencoMacchinetteModel">
+            <summary>
+            Modello per la pagina che mostra l'elenco delle macchinette a sistema.
+            Può mostrare tutte le macchinette o filtrarle per una specifica scuola.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.ElencoMacchinetteModel.OnGetAsync(System.Nullable{System.Int32})">
+            <summary>
+            Richiesta GET: Recupera dall'API le macchinette esistenti. 
+            Se specificato `idScuola`, filtra l'elenco.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.EliminaMacchinettaModel">
+            <summary>
+            Modello per la pagina che consente di eliminare dal sistema una macchinetta esistente.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaMacchinettaModel.OnGetAsync">
+            <summary>
+            Richiesta GET: Carica le macchinette per permettere all'utente di selezionarne una da eliminare.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaMacchinettaModel.OnPostAsync(System.Int32)">
+            <summary>
+            Richiesta POST: Richiede all'API l'eliminazione effettiva della macchinetta specificata.
+            Mostra un avviso di successo o errore al termine.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaMacchinettaModel.CaricaMacchinette">
+            <summary>
+            Helper: Contatta il Server REST per recuperare i dati delle macchinette.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.EliminaScuolaModel">
+            <summary>
+            Modello per la pagina che permette di rimuovere un istituto/scuola, comprese tutte le sue macchinette.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaScuolaModel.OnGetAsync">
+            <summary>
+            Richiesta GET: Carica le scuole e le visualizza in una lista o tendina.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaScuolaModel.OnPostAsync(System.Int32)">
+            <summary>
+            Richiesta POST: Esegue l'eliminazione in coda su database tramite l'API.
+            Ricarica i dati al termine per aggiornare la UI.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.EliminaScuolaModel.CaricaScuole">
+            <summary>
+            Helper: Chiama l'endpoint REST per avere i dati delle scuole aggiornati.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.IndexModel">
+            <summary>
+            Modello per la pagina principale dell'applicazione (Home Page).
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.IndexModel.OnGet">
+            <summary>
+            Gestisce la richiesta GET alla home page. Non esegue operazioni particolari di default.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Pages.StatoMacchinettaModel">
+            <summary>
+            Modello per visualizzare lo stato in dettaglio di una specifica macchinetta.
+            Rileva cassa piena, cialde o bicchieri in esaurimento, guasti e permette l'invio tecnico.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.StatoMacchinettaModel.OnGetAsync(System.Int32)">
+            <summary>
+            Richiesta GET: Effettua il fetch dello stato attuale della macchinetta indicata dall'`id`.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.StatoMacchinettaModel.OnPostAsync(System.Int32,System.String)">
+            <summary>
+            Richiesta POST: Avvia una procedura di richiesta intervento tecnico (es: ricarica o riparazione guasto).
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Pages.StatoMacchinettaModel.CaricaStato(System.Int32)">
+            <summary>
+            Helper: Legge i flag di stato della macchinetta dal JSON restituito dall'API convertendoli nel modello C#.
+            Calcola dinamicamente la natura del guasto/problema.
+            </summary>
+        </member>
+        <member name="T:PissirWebApp.Services.ApiService">
+            <summary>
+            Servizio per comunicare con il Server REST (Apache Spark).
+            Centralizza tutte le chiamate HTTP verso l'API backend.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.GetScuoleAsync">
+            <summary>
+            Recupera l'elenco di tutte le scuole disponibili.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.AggiungiScuolaAsync(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Aggiunge una nuova scuola al sistema inviando i dati al Server REST.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.EliminaScuolaAsync(System.Int32)">
+            <summary>
+            Elimina una scuola dal sistema, comprese tutte le sue macchinette associate.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.GetMacchinetteAsync">
+            <summary>
+            Recupera l'elenco di tutte le macchinette registrate nel sistema.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.GetMacchinetteByScuolaAsync(System.Int32)">
+            <summary>
+            Recupera l'elenco delle macchinette appartenenti a una specifica scuola.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.GetStatoMacchinettaAsync(System.Int32)">
+            <summary>
+            Recupera lo stato dettagliato di una specifica macchinetta (livelli, guasti, ecc.).
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.AggiungiMacchinettaAsync(System.Int32,System.String)">
+            <summary>
+            Aggiunge una nuova macchinetta a una specifica scuola.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.EliminaMacchinettaAsync(System.Int32)">
+            <summary>
+            Elimina una macchinetta esistente.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.InviaTecnicoAsync(System.Int32,System.String)">
+            <summary>
+            Invia una richiesta di intervento tecnico per una specifica macchinetta e un tipo di guasto.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.GetRichiesteAsync">
+            <summary>
+            Recupera tutte le richieste di intervento tecnico pendenti o processate.
+            </summary>
+        </member>
+        <member name="M:PissirWebApp.Services.ApiService.EliminaRichiestaAsync(System.Int32)">
+            <summary>
+            Elimina una richiesta di intervento (segna la richiesta come completata/rimossa).
+            </summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>

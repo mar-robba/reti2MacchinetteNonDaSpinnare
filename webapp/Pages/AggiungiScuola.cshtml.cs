@@ -26,8 +26,15 @@ public class AggiungiScuolaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Mostra semplicemente la pagina con il form vuoto.
+    /// </summary>
     public void OnGet() { }
 
+    /// <summary>
+    /// Richiesta POST: Valida il nome della scuola e la aggiunge tramite API.
+    /// In caso di successo mostra un messaggio, in caso di errore i dettagli dell'errore.
+    /// </summary>
     public async Task<IActionResult> OnPostAsync()
     {
         // Validazione (pag.20: "Dati non validi")

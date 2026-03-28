@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: microservizi.cassa.CassaTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.810 s <<< FAILURE! -- in microservizi.cassa.CassaTest
-microservizi.cassa.CassaTest.testTentativoAcquistoSenzaCreditoSufficienteChiamaDaiResto -- Time elapsed: 0.042 s <<< FAILURE!
+Tests run: 9, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.488 s <<< FAILURE! -- in microservizi.cassa.CassaTest
+microservizi.cassa.CassaTest.testTentativoAcquistoSenzaCreditoSufficienteChiamaDaiResto -- Time elapsed: 0.041 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: Il resto non può essere negativo, la transazione non dovrebbe avvenire ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)

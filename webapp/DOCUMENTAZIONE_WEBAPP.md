@@ -1,0 +1,68 @@
+# Documentazione Web App (PissirWebApp)
+
+Questa directory contiene l'interfaccia utente web (Dashboard) per la gestione del sistema delle macchinette. È sviluppata utilizzando **ASP.NET Core Razor Pages** (C#) e funge da client per il Server REST backend.
+
+## Struttura del Progetto
+
+Il progetto è suddiviso principalmente in due aree logiche: `Pages` (UI e controller delle viste) e `Services` (logica di business/comunicazione backend). Le chiamate di rete sono centralizzate, e l'accesso ad alcune pagine è filtrato in base a ruoli (tramite Keycloak/OpenID Connect).
+
+### File e Cartelle Principali
+
+- **`Program.cs`**  
+  Punto di ingresso dell'applicazione.  
+  - Registra l'utilizzo delle Razor Pages.  
+  - Configura un `HttpClient` (nome "ServerREST") per comunicare verso `http://localhost:8081/api/`.  
+  - Configura il middleware di autenticazione delegato a Keycloak (OpenID Connect) con realm `pissir` (client `pissir-webapp`). Estrae i claim di ruolo dell'utente (ruoli come admin, impiegato, tecnico).  
+
+- **`Services/ApiService.cs`**  
+  Incapsula e centralizza tutte le comunicazioni HTTP verso il Server REST (Java/Spark). Contiene metodi asincroni per effettuare richieste GET, POST e DELETE riguardanti:  
+  - **Scuole**: caricamento, inserimento ed eliminazione.  
+  - **Macchinette**: caricamento (globale o per singola scuola), caricamento dello stato (livelli prodotti, errori logici/hardware), inserimento ed eliminazione, e segnalazione di guasti tramite l'opzione "invia tecnico".  
+  - **Richieste d'intervento (Tecnico)**: caricamento delle richieste pendenti e chiusura delle richieste completate.
+
+### Viste (Cartella `Pages/`)
+
+Ogni pagina si compone di un file `.cshtml` (Razor View) e di un Code Behind `.cshtml.cs` (PageModel) che gestisce le richieste (GET, POST). Tutti i file C# in questa directory sono stati abbondantemente commentati con documentazione XML.
+
+1. **`Index.cshtml` & `Index.cshtml.cs`**  
+   Pagina iniziale o Home Page dell'applicazione Web. Mostra le opzioni principali o una welcome screen.
+
+2. **`AggiungiScuola`**  
+   - Mostra un form per registrare un nuovo istituto (nome, indirizzo, città, provincia, cap).  
+   - Richiama `ApiService.AggiungiScuolaAsync`. Restituisce l'esito a schermo.
+
+3. **`ElencoIstituti`**  
+   - Visualizza l'elenco tabellare o a lista di tutte le scuole configurate a sistema.  
+
+4. **`EliminaScuola`**  
+   - Consente di selezionare una scuola e chiamare l'API per l'eliminazione (che a cascata può rimuovere anche le macchinette collocate al suo interno).
+
+5. **`AggiungiMacchinetta`**  
+   - Carica la lista delle scuole e presenta un form per inserire il nome o la matricola della nuova macchinetta da assegnare a quell'istituto. Restituisce un feedback positivo/negativo sulla creazione.
+
+6. **`ElencoMacchinette`**  
+   - Pagina che mostra la lista di macchinette. Può visualizzare tutte le macchinette presenti a sistema, oppure filtrarle in base all'istituto (`idScuola` via querystring o routing).  
+   - Visualizza a colpo d'occhio stato e flag rilevanti (guasti generici o esaurimento scorte).
+
+7. **`StatoMacchinetta`**  
+   - Entra nel dettaglio della singola macchinetta indicata dall'ID.  
+   - Interroga in dettaglio `GetStatoMacchinettaAsync` per trarre flag importanti come: *cassa piena, cialde in esaurimento, bicchieri/zucchero mancanti, ecc.*  
+   - Include la procedura "Invia Tecnico" (`InviaTecnicoAsync`), per creare una richiesta di un certo tipo al sistema centrale.
+
+8. **`EliminaMacchinetta`**  
+   - Mostra le macchinette attuali e permette l'eliminazione completa di una unità tramite l'`id`.
+
+9. **`CompletamentoRichiesta`**  
+   - Modulo dedicato ai tecnici o agli operatori logistici.  
+   - Carica dall'API l'elenco delle richieste pendenti (es. "SVUOTA_CASSA", "RIEMPI_CIALDE", "AGGIUSTA_MACCHINETTA").  
+   - Consente al tecnico di simulare l'operazione conclusa e di rimuovere tale mansione / completare la richiesta avvertendo via API il server (`EliminaRichiestaAsync`).
+
+## Flusso Generale di Funzionamento
+
+1. **Avvio e Autenticazione**: Quando l'utente contatta la Web App, se naviga su risorse protette verrà reindirizzato al login di Keycloak prima di poterne fruire. I claim di Keycloak vengono usati dalle direttive d'autorizzazione (es. mostrare certi pulsanti o proteggere particolari PageModel).
+2. **Consultazione**: Cliccando su un link nel menù, ad es. "Mostra macchinette", la WebApp usa l'`ApiService` per fare una GET verso `http://localhost:8081/api/macchinette`.
+3. **Parse e Rendering**: L'`ApiService` effettua il map della risposta JSON su oggetti C# e restituisce le proprietà. Il `.cshtml` reitera gli oggetti per generare HTML (tabelle, modali e bottoni) che verranno re-indirizzati verso il browser.
+4. **Mutazioni**: Form HTTP in POST (es. svuotare la cassa di una certa macchinetta) scollegano i dati (`[BindProperty]`) all'interno della View, innescando una chiamata API verso il backend scritto in Java per chiudere o aprire logiche sulle code MQTT in secondo piano.
+
+---
+*La documentazione è stata automatizzata tenendo conto della stesura dei codebehind e del file Program.cs delle configurazioni. Ulteriori dettagli sull'architettura complessiva si trovano nella root del progetto.*

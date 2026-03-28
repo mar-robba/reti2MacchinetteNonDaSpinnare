@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: microservizi.interfacciautente.InterfacciautenteTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.283 s <<< FAILURE! -- in microservizi.interfacciautente.InterfacciautenteTest
-microservizi.interfacciautente.InterfacciautenteTest.testBugSceltaRispostaEccezioniNonGestite -- Time elapsed: 0.034 s <<< FAILURE!
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.275 s <<< FAILURE! -- in microservizi.interfacciautente.InterfacciautenteTest
+microservizi.interfacciautente.InterfacciautenteTest.testBugSceltaRispostaEccezioniNonGestite -- Time elapsed: 0.033 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: L'errore parsing del MQTT deve essere gestito e non lanciare eccezioni verso il chiamante ==> Unexpected exception thrown: java.lang.NumberFormatException: For input string: "non_un_numero"
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)

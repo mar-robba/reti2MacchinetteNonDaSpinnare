@@ -3,6 +3,9 @@ using PissirWebApp.Services;
 
 namespace PissirWebApp.Pages;
 
+/// <summary>
+/// Modello per la pagina che mostra l'elenco di tutte le scuole registrate.
+/// </summary>
 public class ElencoIstitutiModel : PageModel
 {
     private readonly ApiService _api;
@@ -13,6 +16,9 @@ public class ElencoIstitutiModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Effettua una chiamata all'API per recuperare e mostrare le scuole.
+    /// </summary>
     public async Task OnGetAsync()
     {
         var result = await _api.GetScuoleAsync();

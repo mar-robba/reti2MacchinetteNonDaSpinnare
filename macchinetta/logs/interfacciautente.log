@@ -17,15 +17,11 @@ SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further detail
 [MQTT-SUB] Sottoscritto a: macchinetta/1/interfaccia/resto
 [MQTT-SUB] Sottoscritto a: macchinetta/1/interfaccia/errore
 [InterfacciaUtente] 6 subscriber attivi.
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
+[MQTT-PUB] Connesso al broker: tcp://localhost:1883
+[MQTT-PUB] Inviato su macchinetta/1/cassa/monete: 2.0
+[MQTT-SUB] Ricevuto su macchinetta/1/interfaccia/creditoInserito: 2.0
+[InterfacciaUtente] Ricevuto: macchinetta/1/interfaccia/creditoInserito → 2.0
+[MQTT-PUB] Connesso al broker: tcp://localhost:1883
+[MQTT-PUB] Inviato su macchinetta/1/cassa/monete: 2.0
+[MQTT-SUB] Ricevuto su macchinetta/1/interfaccia/creditoInserito: 4.0
+[InterfacciaUtente] Ricevuto: macchinetta/1/interfaccia/creditoInserito → 4.0

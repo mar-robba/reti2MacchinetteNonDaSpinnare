@@ -1,10 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>PissirWebApp</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile> <!--il compilatore inizierà a darti dei "Warning" (avvisi giallo-verdi) su tutti i metodi o classi 
+    pubbliche che non hanno ancora il loro tag /// <summary>. È normale, ti sta solo ricordando di documentarli!-->
   </PropertyGroup>
 
   <ItemGroup>

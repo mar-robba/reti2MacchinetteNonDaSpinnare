@@ -4,6 +4,9 @@ using PissirWebApp.Services;
 
 namespace PissirWebApp.Pages;
 
+/// <summary>
+/// Modello per la pagina che consente di eliminare dal sistema una macchinetta esistente.
+/// </summary>
 public class EliminaMacchinettaModel : PageModel
 {
     private readonly ApiService _api;
@@ -16,8 +19,15 @@ public class EliminaMacchinettaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Carica le macchinette per permettere all'utente di selezionarne una da eliminare.
+    /// </summary>
     public async Task OnGetAsync() { await CaricaMacchinette(); }
 
+    /// <summary>
+    /// Richiesta POST: Richiede all'API l'eliminazione effettiva della macchinetta specificata.
+    /// Mostra un avviso di successo o errore al termine.
+    /// </summary>
     public async Task<IActionResult> OnPostAsync(int idMacchinetta)
     {
         bool eliminata = await _api.EliminaMacchinettaAsync(idMacchinetta);
@@ -27,6 +37,9 @@ public class EliminaMacchinettaModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Helper: Contatta il Server REST per recuperare i dati delle macchinette.
+    /// </summary>
     private async Task CaricaMacchinette()
     {
         Macchinette.Clear();

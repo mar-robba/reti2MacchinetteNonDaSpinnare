@@ -21,11 +21,18 @@ public class CompletamentoRichiestaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Carica l'elenco di tutte le richieste pendenti o in corso.
+    /// </summary>
     public async Task OnGetAsync()
     {
         await CaricaRichieste();
     }
 
+    /// <summary>
+    /// Richiesta POST: Esegue l'intervento tecnico o chiude la richiesta.
+    /// Simula il successo dell'azione locale o effettua la chiamata API per completare/eliminare la richiesta.
+    /// </summary>
     public async Task<IActionResult> OnPostAsync(int idRichiesta, string azione)
     {
         switch (azione)
@@ -63,6 +70,9 @@ public class CompletamentoRichiestaModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Helper per recuperare dal Server REST tutte le richieste per il team tecnico.
+    /// </summary>
     private async Task CaricaRichieste()
     {
         Richieste.Clear();

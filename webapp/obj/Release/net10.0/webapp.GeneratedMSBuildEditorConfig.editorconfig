@@ -1,0 +1,75 @@
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = PissirWebApp
+build_property.RootNamespace = PissirWebApp
+build_property.ProjectDir = /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/AggiungiMacchinetta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdnaXVuZ2lNYWNjaGluZXR0YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/AggiungiScuola.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWdnaXVuZ2lTY3VvbGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/CompletamentoRichiesta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ29tcGxldGFtZW50b1JpY2hpZXN0YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/ElencoIstituti.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRWxlbmNvSXN0aXR1dGkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/ElencoMacchinette.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRWxlbmNvTWFjY2hpbmV0dGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/EliminaMacchinetta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRWxpbWluYU1hY2NoaW5ldHRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/EliminaScuola.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRWxpbWluYVNjdW9sYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/MenuAmministratore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVudUFtbWluaXN0cmF0b3JlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/MenuImpiegato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTWVudUltcGllZ2F0by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/StatoMacchinetta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RhdG9NYWNjaGluZXR0YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/marco/Marco/Uni/Anno_3/reti2/progetto/Realizzazione/reti2MacchinetteNonDaSpinnare/webapp/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 

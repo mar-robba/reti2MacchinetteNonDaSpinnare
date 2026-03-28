@@ -35,7 +35,7 @@ public class ErogatoreAttesa {
 
         this.numeroCaffeQueue = new LinkedBlockingQueue<>();
         this.zuccheroQueue = new LinkedBlockingQueue<>();
-
+                                        // endpoit dell'host
         this.mqttConfig = new MQTTConfig("localhost", 1883, mqttUsername, mqttPassword);
     }
 
@@ -44,6 +44,8 @@ public class ErogatoreAttesa {
      */
     public void sceltaRisposta(String currentTopic, String mex) {
         try {
+            // todo: meglio uno switc
+                                     // meglio per costanti manifeste
             if (currentTopic.endsWith("/eroga")) {
                 int numeroBevanda = Integer.parseInt(mex);
                 numeroCaffeQueue.put(numeroBevanda);
@@ -55,6 +57,7 @@ public class ErogatoreAttesa {
             }
         } catch (NumberFormatException e) {
             System.err.println("[ErogatoreAttesa] Formato non valido: " + mex);
+            // ?? programmazione concorrente che vuol dire mettere lanciare un interrupt al thread corrente come getione dell'eccezione InterruptedExeption
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -66,7 +69,7 @@ public class ErogatoreAttesa {
     public void publisherTo(String mex, String topic) {
         MQTTPublisher publisher = new MQTTPublisher(mqttConfig);
         publisher.publish(topic, mex);
-        publisher.disconnect();
+        publisher.disconnect(); // guarda effetti collaterali del non disconnettere
     }
 
     /**
@@ -74,6 +77,7 @@ public class ErogatoreAttesa {
      */
     public void startListening() {
         System.out.println("[ErogatoreAttesa] Avvio subscriber su radix: " + topicRadix);
+                                                                              // meglio metterli come costanti manifeste
         listaSubscriber.add(new MQTTSubscriber(mqttConfig, topicRadix + "eroga", this::sceltaRisposta));
         listaSubscriber.add(new MQTTSubscriber(mqttConfig, topicRadix + "setZucchero", this::sceltaRisposta));
         System.out.println("[ErogatoreAttesa] " + listaSubscriber.size() + " subscriber attivi.");

@@ -1,5 +1,7 @@
 package microservizi.mqtt;
 
+///////// !! sicero non sono sicuro della bonta di questa pratica, credo che un enum o qualcosa del genere potrebbe essere meglio copiare e chiedere a gemini
+
 /**
  * Configurazione per la connessione al broker MQTT Mosquitto.
  */
@@ -18,6 +20,7 @@ public class MQTTConfig {
     /**
      * Configurazione di default per connessione locale.
      */
+    // forse per la modalità test ? o boh
     public MQTTConfig() {
         this("localhost", 1883, "macchinetta1", "password1");
     }
@@ -42,6 +45,7 @@ public class MQTTConfig {
         this.username = username;
     }
 
+    // ma che senso ha sta roba ?
     public void setPassword(String password) {
         this.password = password;
     }

@@ -35,12 +35,15 @@ public class DatabaseManager {
 
     /**
      * Restituisce l'elenco di tutte le scuole.
+     * Recupera tutte le righe dalla tabella 'scuole' ordinandole alfabeticamente.
      */
     public JsonArray getScuole() {
         JsonArray result = new JsonArray();
+        // Try-with-resources per auto-chiusura in sicurezza degli statement JDBC
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM scuole ORDER BY nome")) {
+            // Itera sui record forniti della query
             while (rs.next()) {
                 JsonObject scuola = new JsonObject();
                 scuola.addProperty("id", rs.getInt("id"));
@@ -58,17 +61,18 @@ public class DatabaseManager {
     }
 
     /**
-     * Aggiunge una nuova scuola. Restituisce l'ID generato, oppure -1 se esiste già.
+     * Aggiunge una nuova scuola. Restituisce l'ID generato dall'AUTO_INCREMENT, oppure -1 se esiste già.
      */
     public int aggiungiScuola(String nome, String indirizzo, String citta, String provincia, String cap) {
-        // Controlla se esiste già
+        // Controlla preliminarmente se esiste già una scuola omonima (evita doppioni)
         try (Connection conn = getConnection();
              PreparedStatement check = conn.prepareStatement("SELECT id FROM scuole WHERE nome = ?")) {
             check.setString(1, nome);
             try (ResultSet rs = check.executeQuery()) {
-                if (rs.next()) return -1; // Scuola già esistente
+                if (rs.next()) return -1; // Scuola già esistente, rompe l'esecuzione e ritorna -1
             }
 
+            // Inserisce record e preleva chiave (ID) per poterla ritornare al frontend (o chiamante REST)
             try (PreparedStatement ps = conn.prepareStatement(
                     "INSERT INTO scuole (nome, indirizzo, citta, provincia, cap) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS)) {
@@ -79,6 +83,7 @@ public class DatabaseManager {
                 ps.setString(5, cap);
                 ps.executeUpdate();
 
+                // Recupera l'ID univoco auto-generato dal backend del database
                 try (ResultSet keys = ps.getGeneratedKeys()) {
                     if (keys.next()) return keys.getInt(1);
                 }
@@ -122,7 +127,8 @@ public class DatabaseManager {
     // =================== MACCHINETTE ===================
 
     /**
-     * Restituisce l'elenco di tutte le macchinette.
+     * Restituisce l'elenco di tutte le macchinette formattato in Array JSON.
+     * Effettua una JOIN SQL con la tabella Scuole per risolvere la foreign key ottenendo nomi in un colpo solo.
      */
     public JsonArray getMacchinette() {
         JsonArray result = new JsonArray();
@@ -132,6 +138,7 @@ public class DatabaseManager {
                      "SELECT m.*, s.nome AS nome_scuola FROM macchinette m " +
                      "JOIN scuole s ON m.id_scuola = s.id ORDER BY m.id")) {
             while (rs.next()) {
+                // Utilizza un helper privato serializzando su JsonObject
                 result.add(macchinettaFromResultSet(rs));
             }
         } catch (SQLException e) {
@@ -231,9 +238,11 @@ public class DatabaseManager {
     }
 
     /**
-     * Aggiorna i flag di stato di una macchinetta.
+     * Aggiorna a runtime e parametricamente i flag di stato allarme e magazzino di una data macchinetta.
+     * Adattabile, usato massicciamente da MQTT Bridge.
      */
     public void aggiornaFlagMacchinetta(int id, String flagName, boolean value) {
+        // Poichè i field di query dinamici sono anti-pattern, prestiamo attenzione alla composizione della stringa per evitare SQL Injection
         String sql = "UPDATE macchinette SET " + flagName + " = ? WHERE id = ?";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -287,7 +296,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Restituisce l'elenco delle richieste aperte per il tecnico.
+     * Restituisce l'elenco delle richieste di urgenza in corso (da eseguire) per il tecnico.
+     * Viene usato l'operatore JOIN per legare i nomi degli istituti all'elenco dei ticket delle dipendenti macchinette.
      */
     public JsonArray getRichiesteTecnico() {
         JsonArray result = new JsonArray();
@@ -301,6 +311,7 @@ public class DatabaseManager {
                      "WHERE r.stato != 'COMPLETATA' ORDER BY r.data_apertura DESC")) {
             while (rs.next()) {
                 JsonObject richiesta = new JsonObject();
+                // Popolamento manuale della striscia JSON
                 richiesta.addProperty("id", rs.getInt("id"));
                 richiesta.addProperty("id_macchinetta", rs.getInt("id_macchinetta"));
                 richiesta.addProperty("nome_macchinetta", rs.getString("nome_macchinetta"));

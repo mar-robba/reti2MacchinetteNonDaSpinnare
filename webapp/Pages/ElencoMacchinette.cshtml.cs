@@ -3,6 +3,10 @@ using PissirWebApp.Services;
 
 namespace PissirWebApp.Pages;
 
+/// <summary>
+/// Modello per la pagina che mostra l'elenco delle macchinette a sistema.
+/// Può mostrare tutte le macchinette o filtrarle per una specifica scuola.
+/// </summary>
 public class ElencoMacchinetteModel : PageModel
 {
     private readonly ApiService _api;
@@ -14,6 +18,10 @@ public class ElencoMacchinetteModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Recupera dall'API le macchinette esistenti. 
+    /// Se specificato `idScuola`, filtra l'elenco.
+    /// </summary>
     public async Task OnGetAsync(int? idScuola)
     {
         var result = idScuola.HasValue

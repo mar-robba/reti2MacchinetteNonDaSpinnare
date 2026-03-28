@@ -4,6 +4,9 @@ using PissirWebApp.Services;
 
 namespace PissirWebApp.Pages;
 
+/// <summary>
+/// Modello per la pagina che permette di rimuovere un istituto/scuola, comprese tutte le sue macchinette.
+/// </summary>
 public class EliminaScuolaModel : PageModel
 {
     private readonly ApiService _api;
@@ -16,8 +19,15 @@ public class EliminaScuolaModel : PageModel
         _api = new ApiService(httpClientFactory);
     }
 
+    /// <summary>
+    /// Richiesta GET: Carica le scuole e le visualizza in una lista o tendina.
+    /// </summary>
     public async Task OnGetAsync() { await CaricaScuole(); }
 
+    /// <summary>
+    /// Richiesta POST: Esegue l'eliminazione in coda su database tramite l'API.
+    /// Ricarica i dati al termine per aggiornare la UI.
+    /// </summary>
     public async Task<IActionResult> OnPostAsync(int idScuola)
     {
         bool eliminata = await _api.EliminaScuolaAsync(idScuola);
@@ -27,6 +37,9 @@ public class EliminaScuolaModel : PageModel
         return Page();
     }
 
+    /// <summary>
+    /// Helper: Chiama l'endpoint REST per avere i dati delle scuole aggiornati.
+    /// </summary>
     private async Task CaricaScuole()
     {
         Scuole.Clear();

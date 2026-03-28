@@ -20,20 +20,30 @@ public class ServerREST_MQTT {
     }
 
     /**
-     * Avvia il client MQTT e si sottoscrive ai topic delle macchinette.
+     * Avvia il client MQTT e si sottoscrive ai topic generati dalle macchinette.
+     * Serve a stabilire la connessione con il Broker e a indicare la callback da eseguire
+     * ad ogni ricezione di payload.
+     * 
+     * @param brokerUrl Indirizzo del broker locale MQTT (default: tcp://localhost:1883)
+     * @param username Username per la connessione
+     * @param password Password per la connessione (opzionale)
      */
     public void start(String brokerUrl, String username, String password) {
         try {
+            // Inizializza il client con un ID client univoco: 'server-rest-mqtt'
             client = new MqttClient(brokerUrl, "server-rest-mqtt", new MemoryPersistence());
 
             MqttConnectOptions options = new MqttConnectOptions();
-            options.setCleanSession(true);
-            options.setAutomaticReconnect(true);
+            options.setCleanSession(true); // Se vero, il broker non ricorderà lo stato
+            options.setAutomaticReconnect(true); // Riconnessione autonoma in caso di caduta link
+            
+            // Applica le credenziali se presenti
             if (username != null && !username.isEmpty()) {
                 options.setUserName(username);
                 options.setPassword(password.toCharArray());
             }
 
+            // Definisce l'interfaccia MqttCallback, in ascolto di segnali dal Broker
             client.setCallback(new MqttCallback() {
                 @Override
                 public void connectionLost(Throwable cause) {
@@ -42,6 +52,7 @@ public class ServerREST_MQTT {
 
                 @Override
                 public void messageArrived(String topic, MqttMessage message) {
+                    // Viene catturato automaticamente il messaggio e inoltrato al metodo di processamento
                     String payload = new String(message.getPayload());
                     processMessage(topic, payload);
                 }
@@ -50,9 +61,11 @@ public class ServerREST_MQTT {
                 public void deliveryComplete(IMqttDeliveryToken token) {}
             });
 
+            // Connessione fisica al server (es. Eclipse Mosquitto)
             client.connect(options);
 
-            // Sottoscrivi a tutti i topic di guasto dalle macchinette
+            // Sottoscrivi a tutti i topic di guasto dalle macchinette ricorrendo alla wildcard '+'
+            // server/macchinetta/+/guasto ascolterà ad es. l'id 1, 2, 3 ecc.
             client.subscribe("server/macchinetta/+/guasto", 1);
             client.subscribe("server/macchinetta/+/guastoRisolto", 1);
             client.subscribe("server/macchinetta/+/stato", 1);
@@ -67,24 +80,32 @@ public class ServerREST_MQTT {
     }
 
     /**
-     * Processa i messaggi MQTT ricevuti dalle macchinette.
-     * Aggiorna i flag nel database e crea richieste per il tecnico.
+     * Processa i messaggi MQTT ricevuti dinamicamente dalle macchinette.
+     * Estrae l'ID dallo string del topic e direziona l'aggiornamento
+     * verso la routine DB corretta o verso le classi di allarme.
+     * 
+     * @param topic Il "canale" in cui è pervenuto il messaggio
+     * @param payload Il contenuto (es "CASSA_PIENA" o stringhe formattate Json)
      */
     private void processMessage(String topic, String payload) {
         System.out.println("[ServerREST_MQTT] Messaggio: " + topic + " = " + payload);
 
-        // Estrai l'ID della macchinetta dal topic: server/macchinetta/{id}/guasto
+        // Estrai l'ID della macchinetta dal topic strutturato: server/macchinetta/{id}/guasto
         String[] parts = topic.split("/");
+        
+        // Verifica preliminare per impedire NullPointer e disallineamenti ad un topic non corretto
         if (parts.length < 4) return;
 
         int idMacchinetta;
         try {
+            // Conversione base-10 del valore in array (ovvero la {id})
             idMacchinetta = Integer.parseInt(parts[2]);
         } catch (NumberFormatException e) {
             System.err.println("[ServerREST_MQTT] ID macchinetta non valido: " + parts[2]);
             return;
         }
 
+        // Smistamento Switch/If basato sui pattern terminali del topic
         if (topic.endsWith("/guasto")) {
             handleGuasto(idMacchinetta, payload);
         } else if (topic.endsWith("/guastoRisolto")) {
@@ -95,12 +116,12 @@ public class ServerREST_MQTT {
     }
 
     /**
-     * Gestisce una segnalazione di guasto.
+     * Gestisce e salva sul DB una segnalazione critica di guasto giunta.
      */
     private void handleGuasto(int idMacchinetta, String tipoGuasto) {
         System.out.println("[ServerREST_MQTT] Guasto da macchinetta " + idMacchinetta + ": " + tipoGuasto);
 
-        // Aggiorna i flag appropriati nel DB
+        // Aggiorna specifici flag d'allarme nelle colonne boolean DB della specifica macchinetta
         if (tipoGuasto.contains("CASSA_PIENA")) {
             dbManager.aggiornaFlagMacchinetta(idMacchinetta, "flag_cassa_piena", true);
         }
@@ -115,19 +136,22 @@ public class ServerREST_MQTT {
         }
         if (tipoGuasto.contains("GUASTO_GENERICO")) {
             dbManager.aggiornaFlagMacchinetta(idMacchinetta, "flag_guasto_generico", true);
+            // In caso di guasto hardware grave forziamo l'inattività booleana 'falsa'
             dbManager.aggiornaFlagMacchinetta(idMacchinetta, "stato", false); // Imposta stato GUASTO
         }
 
-        // Crea una richiesta per il tecnico
+        // Genera automaticamente un ticket pendente per i tecnici (visibile dalla WebApp)
         dbManager.creaRichiestaTecnico(idMacchinetta, tipoGuasto, "Segnalazione automatica MQTT");
     }
 
     /**
-     * Gestisce la risoluzione di un guasto.
+     * Gestisce la ripresa dell'esercizio a seguito della risoluzione del guasto.
+     * Solitamente pervenuto quando un tecnico resetta la macchinetta.
      */
     private void handleGuastoRisolto(int idMacchinetta, String tipoGuasto) {
         System.out.println("[ServerREST_MQTT] Guasto risolto per macchinetta " + idMacchinetta + ": " + tipoGuasto);
 
+        // Annulla il flag 'true' commutandolo in 'false' nel record DB relazionale
         if (tipoGuasto.contains("CASSA_PIENA")) {
             dbManager.aggiornaFlagMacchinetta(idMacchinetta, "flag_cassa_piena", false);
         }

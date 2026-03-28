@@ -4,7 +4,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.util.UUID;
-import java.util.function.BiConsumer;
+import java.util.function.BiConsumer;// ?
 
 /**
  * Subscriber MQTT che riceve messaggi su un topic specifico.
@@ -14,7 +14,7 @@ public class MQTTSubscriber {
 
     private MqttClient client;
     private String topic;
-    private BiConsumer<String, String> messageHandler;
+    private BiConsumer<String, String> messageHandler; // perchè l'ai non ha usato il this. dentro il costruttore
 
     /**
      * Crea un subscriber MQTT.
@@ -22,7 +22,8 @@ public class MQTTSubscriber {
      * @param config         configurazione del broker
      * @param topic          topic a cui sottoscriversi
      * @param messageHandler callback (topic, messaggio) invocato alla ricezione
-     */
+     */                                                      // perchè se passi una funzione come parametro devi avere un tipo biconsumer con <String, String> come parametro ?
+                                                                // rispostata: i tipi dell'oggetto componete sono i tipi dei parametri della funzione data
     public MQTTSubscriber(MQTTConfig config, String topic, BiConsumer<String, String> messageHandler) {
         this.topic = topic;
         this.messageHandler = messageHandler;
@@ -38,7 +39,7 @@ public class MQTTSubscriber {
                 options.setUserName(config.getUsername());
                 options.setPassword(config.getPassword().toCharArray());
             }
-
+            // Costrutto linguistico per settare la callback
             client.setCallback(new MqttCallback() {
                 @Override
                 public void connectionLost(Throwable cause) {
@@ -49,7 +50,9 @@ public class MQTTSubscriber {
                 public void messageArrived(String t, MqttMessage message) {
                     String payload = new String(message.getPayload());
                     System.out.println("[MQTT-SUB] Ricevuto su " + t + ": " + payload);
+                    // dove si setta la collback
                     if (messageHandler != null) {
+                                        // perche accept
                         messageHandler.accept(t, payload);
                     }
                 }

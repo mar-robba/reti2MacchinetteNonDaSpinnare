@@ -18,12 +18,18 @@ public class ApiService
 
     // =================== SCUOLE ===================
 
+    /// <summary>
+    /// Recupera l'elenco di tutte le scuole disponibili.
+    /// </summary>
     public async Task<JsonDocument?> GetScuoleAsync()
     {
         var response = await _httpClient.GetAsync("scuole");
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Aggiunge una nuova scuola al sistema inviando i dati al Server REST.
+    /// </summary>
     public async Task<JsonDocument?> AggiungiScuolaAsync(string nome, string indirizzo, string citta, string provincia, string cap)
     {
         var body = new { nome, indirizzo, citta, provincia, cap };
@@ -31,6 +37,9 @@ public class ApiService
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Elimina una scuola dal sistema, comprese tutte le sue macchinette associate.
+    /// </summary>
     public async Task<bool> EliminaScuolaAsync(int id)
     {
         var response = await _httpClient.DeleteAsync($"scuole/{id}");
@@ -39,24 +48,36 @@ public class ApiService
 
     // =================== MACCHINETTE ===================
 
+    /// <summary>
+    /// Recupera l'elenco di tutte le macchinette registrate nel sistema.
+    /// </summary>
     public async Task<JsonDocument?> GetMacchinetteAsync()
     {
         var response = await _httpClient.GetAsync("macchinette");
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Recupera l'elenco delle macchinette appartenenti a una specifica scuola.
+    /// </summary>
     public async Task<JsonDocument?> GetMacchinetteByScuolaAsync(int idScuola)
     {
         var response = await _httpClient.GetAsync($"scuole/{idScuola}/macchinette");
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Recupera lo stato dettagliato di una specifica macchinetta (livelli, guasti, ecc.).
+    /// </summary>
     public async Task<JsonDocument?> GetStatoMacchinettaAsync(int id)
     {
         var response = await _httpClient.GetAsync($"macchinette/{id}/stato");
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Aggiunge una nuova macchinetta a una specifica scuola.
+    /// </summary>
     public async Task<JsonDocument?> AggiungiMacchinettaAsync(int idScuola, string nome)
     {
         var body = new { id_scuola = idScuola, nome };
@@ -64,12 +85,18 @@ public class ApiService
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Elimina una macchinetta esistente.
+    /// </summary>
     public async Task<bool> EliminaMacchinettaAsync(int id)
     {
         var response = await _httpClient.DeleteAsync($"macchinette/{id}");
         return response.IsSuccessStatusCode;
     }
 
+    /// <summary>
+    /// Invia una richiesta di intervento tecnico per una specifica macchinetta e un tipo di guasto.
+    /// </summary>
     public async Task<JsonDocument?> InviaTecnicoAsync(int idMacchinetta, string tipoGuasto)
     {
         var body = new { tipo_guasto = tipoGuasto };
@@ -79,12 +106,18 @@ public class ApiService
 
     // =================== RICHIESTE TECNICO ===================
 
+    /// <summary>
+    /// Recupera tutte le richieste di intervento tecnico pendenti o processate.
+    /// </summary>
     public async Task<JsonDocument?> GetRichiesteAsync()
     {
         var response = await _httpClient.GetAsync("richieste");
         return await ParseResponseAsync(response);
     }
 
+    /// <summary>
+    /// Elimina una richiesta di intervento (segna la richiesta come completata/rimossa).
+    /// </summary>
     public async Task<bool> EliminaRichiestaAsync(int id)
     {
         var response = await _httpClient.DeleteAsync($"richieste/{id}");

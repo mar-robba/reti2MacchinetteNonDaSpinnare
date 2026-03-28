@@ -1,9 +1,9 @@
 package microservizi.mqtt;
 
 import org.eclipse.paho.client.mqttv3.*;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence; // ?
 
-import java.util.UUID;
+import java.util.UUID; // ?
 
 /**
  * Publisher MQTT per inviare messaggi a topic specifici.
@@ -17,18 +17,22 @@ public class MQTTPublisher {
      */
     public MQTTPublisher(MQTTConfig config) {
         try {
+                               // cosa serve assegnare un id univoco al client, non è una operazione che può essere fatta in automatico
             String clientId = "pub-" + UUID.randomUUID().toString().substring(0, 8);
+                                                                            // ?
             client = new MqttClient(config.getBrokerUrl(), clientId, new MemoryPersistence());
-
+           // si creano le opzioni e lassociazione all'utente cui il client e associato
+                                             // forse c'è nell'esempio di emacs
             MqttConnectOptions options = new MqttConnectOptions();
             options.setCleanSession(true);
             options.setAutomaticReconnect(true);
+            //Un singolo utente Mosquitto (ovvero uno specifico username e password) può essere utilizzato da più client contemporaneamente.
             if (config.getUsername() != null && !config.getUsername().isEmpty()) {
                 options.setUserName(config.getUsername());
                 options.setPassword(config.getPassword().toCharArray());
             }
 
-            client.connect(options);
+            client.connect(options); //lo si assoccia e connette con le opzioni e naturalemte anche al'utente della configurazione. Inoltre ha il relativo id client
             System.out.println("[MQTT-PUB] Connesso al broker: " + config.getBrokerUrl());
 
         } catch (MqttException e) {
@@ -59,7 +63,7 @@ public class MQTTPublisher {
             e.printStackTrace();
         }
     }
-
+                 // diconneti e chiudi
     public void disconnect() {
         try {
             if (client != null && client.isConnected()) {
