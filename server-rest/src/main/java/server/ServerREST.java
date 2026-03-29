@@ -114,10 +114,12 @@ public class ServerREST {
 
             boolean eliminata = dbManager.eliminaScuola(id);
             if (eliminata) {
+                        // cosa è queto successJson ?
                 return successJson("Scuola eliminata con tutte le macchinette");
             }
             res.status(500);
             return errorJson("Errore durante l'eliminazione");
+            // parsifica in jason il return è una callback
         }, gson::toJson);
 
         // =================== MACCHINETTE ===================

@@ -1,3 +1,10 @@
+ Dove viene configurato e invocato MySQL?
+Tutta la logica di connessione è nel file DatabaseManager.java:
+
+Configurazione URL (JDBC): Alla riga 21, viene costruito l'indirizzo per parlare con il database:
+java
+this.url = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "...";
+Qui viene specificato il protocollo jdbc:mysql che indica al programma di usare il driver di MySQL.
 # Documentazione Server REST PISSIR
 
 Questa cartella contiene il codice sorgente per il microservizio **Server REST** del progetto PISSIR. Il server agisce da intermediario tra i client (come la Web App Gestionale), il Database centralizzato MySQL e le macchinette distribuite tramite il protocollo MQTT.

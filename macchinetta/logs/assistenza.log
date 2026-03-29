@@ -6,29 +6,18 @@
 [[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
 [[1;34mINFO[m] 
 [[1;34mINFO[m] [1m--- [0;32mexec:3.1.1:java[m [1m(default-cli)[m @ [36mmacchinetta[0;1m ---[m
-[MQTT-SUB] Sottoscritto a: macchinetta/1/assistenza/guasto
-[MQTT-SUB] Sottoscritto a: macchinetta/1/assistenza/risolto
-[MQTT-SUB] Sottoscritto a: server/macchinetta/1/tecnicoInviato
-[Assistenza] 3 subscriber attivi per macchinetta 1
-[Assistenza] Microservizio avviato per macchinetta 1
+[MQTT-SUB] Sottoscritto a: macchinetta/2/assistenza/guasto
+[MQTT-SUB] Sottoscritto a: macchinetta/2/assistenza/risolto
+[MQTT-SUB] Sottoscritto a: server/macchinetta/2/tecnicoInviato
+[Assistenza] 3 subscriber attivi per macchinetta 2
+[Assistenza] Microservizio avviato per macchinetta 2
 [MQTT-SUB] Connessione persa: Connessione persa
 [MQTT-SUB] Connessione persa: Connessione persa
 [MQTT-SUB] Connessione persa: Connessione persa
 [MQTT-SUB] Connessione persa: Connessione persa
 [MQTT-SUB] Connessione persa: Connessione persa
 [MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
-[MQTT-SUB] Connessione persa: Connessione persa
+_ESAURIMENTO,CIALDE_THE_ESAURIMENTO,CIALDE_CIOCCOLATA_ESAURIMENTO,ZUCCHERO_ESAURIMENTO
+[MQTT-PUB] Connesso al broker: tcp://localhost:1883
+[MQTT-PUB] Inviato su server/macchinetta/2/guasto: CIALDE_CAFFE_ESAURIMENTO,CIALDE_LATTE_ESAURIMENTO,CIALDE_THE_ESAURIMENTO,CIALDE_CIOCCOLATA_ESAURIMENTO,ZUCCHERO_ESAURIMENTO
+[Assistenza] Guasto inoltrato al server: CIALDE_CAFFE_ESAURIMENTO,CIALDE_LATTE_ESAURIMENTO,CIALDE_THE_ESAURIMENTO,CIALDE_CIOCCOLATA_ESAURIMENTO,ZUCCHERO_ESAURIMENTO
